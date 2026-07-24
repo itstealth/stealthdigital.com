@@ -7,9 +7,6 @@ const nextConfig = {
       { protocol: "https", hostname: "source.unsplash.com" },
     ],
   },
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
   typescript: {
     ignoreBuildErrors: false,
   },

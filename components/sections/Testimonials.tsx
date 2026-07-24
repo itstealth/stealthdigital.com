@@ -9,8 +9,10 @@ import { TESTIMONIALS } from "@/data/testimonials";
 
 // SplashCursor is a WebGL fluid effect — only loaded on the client and
 // only mounted while the Client Voices section is in view, so the heavy
-// GL init doesn't run when the section is offscreen.
-const SplashCursor = dynamic(() => import("@/components/SplashCursor"), {
+// GL init doesn't run when the section is offscreen. The .jsx file is the
+// original JS implementation; the `.tsx` conversion was abandoned because
+// the helper classes use untyped `this`.
+const SplashCursor = dynamic(() => import("@/components/SplashCursor.jsx"), {
   ssr: false,
   loading: () => null,
 });

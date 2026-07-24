@@ -179,9 +179,15 @@ export function Navbar() {
                 <div>
                   <span className="eyebrow text-cream/40 mb-4 block">Social</span>
                   <div className="flex flex-wrap gap-4">
-                    {SITE.social.map((social) => (
-                      <a key={social.platform} href={social.url} target="_blank" rel="noopener noreferrer" className="font-mono text-sm text-cream hover:text-cream/70 transition-colors uppercase">
-                        {social.platform}
+                    {Object.entries(SITE.social).map(([platform, url]) => (
+                      <a
+                        key={platform}
+                        href={url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="font-mono text-sm text-cream hover:text-cream/70 transition-colors uppercase"
+                      >
+                        {platform}
                       </a>
                     ))}
                   </div>
