@@ -166,7 +166,7 @@ export function WhatWeDo() {
       {/* Marquee of service cards — matches Process card style, scrolls
           horizontally and pauses on hover. Each card expands to reveal
           full details on individual hover. */}
-      <Marquee speed={40} pauseOnHover={true} className="pb-4">
+      <Marquee speed={40} pauseOnHover={true} draggable className="pb-4">
         {SERVICES.map((service, i) => (
           <ServiceCard key={service.slug} service={service} index={i} />
         ))}
