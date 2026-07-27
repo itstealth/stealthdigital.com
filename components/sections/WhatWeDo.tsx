@@ -57,7 +57,7 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
 
   return (
     <div
-      className={`group/card relative shrink-0 w-[380px] md:w-[420px] h-[720px] border border-cream/10 transition-colors duration-500 hover:border-cream/20 flex flex-col overflow-hidden ${
+      className={`group/card relative shrink-0 w-[300px] md:w-[340px] h-[560px] border border-cream/10 transition-colors duration-500 hover:border-cream/20 flex flex-col overflow-hidden ${
         coverImage
           ? "bg-ink-950 hover:bg-ink-900"
           : "bg-ink-950 hover:bg-ink-900"
@@ -71,7 +71,7 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
             src={coverImage}
             alt={service.title}
             fill
-            sizes="420px"
+            sizes="340px"
             className="object-cover transition-all duration-700 ease-out group-hover/card:blur-md group-hover/card:scale-105"
           />
           {/* Default legibility gradient (light) — bottom-darkens so the title is readable */}
@@ -82,61 +82,61 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
       )}
 
       {/* Top section — always visible, padded */}
-      <div className="relative z-10 p-8 md:p-10">
+      <div className="relative z-10 p-6 md:p-8">
         {/* Step + icon */}
         <div className="flex items-start justify-between">
-          <span className="font-mono text-sm text-cream/40">0{index + 1}</span>
+          <span className="font-mono text-xs text-cream/40">0{index + 1}</span>
           <Icon
-            size={32}
+            size={26}
             strokeWidth={1}
             className="text-cream/30 transition-colors duration-500 group-hover/card:text-cream"
           />
         </div>
 
         {/* Title + tagline */}
-        <h3 className="mt-10 font-display text-2xl md:text-3xl font-bold text-cream tracking-tight leading-tight">
+        <h3 className="mt-8 font-display text-xl md:text-2xl font-bold text-cream tracking-tight leading-tight">
           {service.title}
         </h3>
-        <p className="mt-3 text-base md:text-lg text-cream/60 leading-snug">
+        <p className="mt-2 text-sm md:text-base text-cream/60 leading-snug">
           {service.tagline}
         </p>
       </div>
 
       {/* Visual separator — always visible */}
-      <div className="relative z-10 mx-8 md:mx-10 h-px bg-cream/10" />
+      <div className="relative z-10 mx-6 md:mx-8 h-px bg-cream/10" />
 
       {/* Details — only shown on hover of THIS card. Uses a named
           group-hover/card so the marquee's pause-on-hover group doesn't
           trigger every card at once. */}
       <div className="relative z-10 flex-1 overflow-hidden">
         <div className="max-h-0 opacity-0 transition-all duration-500 ease-out group-hover/card:max-h-[2000px] group-hover/card:opacity-100">
-          <div className="p-8 md:p-10 pt-6">
-            <p className="text-sm md:text-base leading-relaxed text-cream/70">
+          <div className="p-6 md:p-8 pt-5">
+            <p className="text-xs md:text-sm leading-relaxed text-cream/70">
               {service.description}
             </p>
 
-            <ul className="mt-5 space-y-2">
+            <ul className="mt-4 space-y-1.5">
               {service.features.slice(0, 4).map((f) => (
                 <li
                   key={f}
-                  className="flex items-start gap-2 text-xs md:text-sm text-cream/55"
+                  className="flex items-start gap-2 text-[11px] md:text-xs text-cream/55"
                 >
-                  <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-accent" />
+                  <span className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-accent" />
                   <span>{f}</span>
                 </li>
               ))}
             </ul>
 
-            <div className="mt-6 flex items-center justify-between">
+            <div className="mt-5 flex items-center justify-between">
               <Link
                 href={`/services/${service.slug}`}
-                className="group/link inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.2em] text-cream/70 transition-colors hover:text-accent"
+                className="group/link inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.2em] text-cream/70 transition-colors hover:text-accent"
               >
                 Explore Service
-                <ArrowUpRight className="h-3.5 w-3.5 transition-transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5" />
+                <ArrowUpRight className="h-3 w-3 transition-transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5" />
               </Link>
               {/* Hover line — matches Process card style */}
-              <div className="h-px w-12 bg-cream/30 transition-all duration-700 group-hover/card:w-full group-hover/card:bg-accent" />
+              <div className="h-px w-10 bg-cream/30 transition-all duration-700 group-hover/card:w-full group-hover/card:bg-accent" />
             </div>
           </div>
         </div>

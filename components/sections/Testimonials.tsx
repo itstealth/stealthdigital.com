@@ -158,53 +158,56 @@ export function Testimonials() {
             </AnimatePresence>
           </div>
 
-          {/* Controls */}
+          {/* Right column — Video + Controls */}
           <div className="md:col-span-4 flex flex-col justify-between gap-8 mt-8 md:mt-0">
-            <div className="font-mono text-[11px] uppercase tracking-[0.2em] text-ink-950/50">
-              [0{active + 1} / 0{TESTIMONIALS.length}]
-            </div>
-            <div className="flex gap-4">
-              <button
-                onClick={() =>
-                  setActive(
-                    (active - 1 + TESTIMONIALS.length) % TESTIMONIALS.length
-                  )
-                }
-                className="group inline-flex h-14 w-14 items-center justify-center rounded-full border border-ink-950/20 text-ink-950 transition-all hover:border-ink-950 hover:bg-ink-950 hover:text-cream"
-                aria-label="Previous testimonial"
+            {/* Video — same source for every testimonial. Re-keyed on
+                `active` so it unmounts/remounts and restarts from the
+                beginning on each slide: the video plays 5 times, once
+                per testimonial. */}
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={active}
+                initial={{ opacity: 0, scale: 0.96 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.96 }}
+                transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                className="relative aspect-[4/5] w-full overflow-hidden rounded-2xl bg-ink-950 shadow-2xl shadow-black/30"
               >
-                <ArrowLeft size={20} />
-              </button>
-              <button
-                onClick={() => setActive((active + 1) % TESTIMONIALS.length)}
-                className="group inline-flex h-14 w-14 items-center justify-center rounded-full border border-ink-950/20 text-ink-950 transition-all hover:border-ink-950 hover:bg-ink-950 hover:text-cream"
-                aria-label="Next testimonial"
-              >
-                <ArrowRight size={20} />
-              </button>
-            </div>
+                <video
+                  className="absolute inset-0 h-full w-full object-cover"
+                  src="/videos/testi demo .mp4"
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                />
+              </motion.div>
+            </AnimatePresence>
 
-            {/* Counter dots */}
-            <div className="flex flex-col gap-3">
-              {TESTIMONIALS.map((_, i) => (
+            <div className="flex flex-col gap-6">
+              <div className="font-mono text-[11px] uppercase tracking-[0.2em] text-ink-950/50">
+                [0{active + 1} / 0{TESTIMONIALS.length}]
+              </div>
+              <div className="flex gap-4">
                 <button
-                  key={i}
-                  onClick={() => setActive(i)}
-                  className={`group flex items-center gap-4 py-2 transition-opacity ${
-                    active === i ? "opacity-100" : "opacity-30 hover:opacity-70"
-                  }`}
-                  aria-label={`Testimonial ${i + 1}`}
+                  onClick={() =>
+                    setActive(
+                      (active - 1 + TESTIMONIALS.length) % TESTIMONIALS.length
+                    )
+                  }
+                  className="group inline-flex h-14 w-14 items-center justify-center rounded-full border border-ink-950/20 text-ink-950 transition-all hover:border-ink-950 hover:bg-ink-950 hover:text-cream"
+                  aria-label="Previous testimonial"
                 >
-                  <span className="font-mono text-[10px] text-ink-950">
-                    0{i + 1}
-                  </span>
-                  <span
-                    className={`h-px transition-all duration-500 ${
-                      active === i ? "w-16 bg-ink-950" : "w-6 bg-ink-950/30"
-                    }`}
-                  />
+                  <ArrowLeft size={20} />
                 </button>
-              ))}
+                <button
+                  onClick={() => setActive((active + 1) % TESTIMONIALS.length)}
+                  className="group inline-flex h-14 w-14 items-center justify-center rounded-full border border-ink-950/20 text-ink-950 transition-all hover:border-ink-950 hover:bg-ink-950 hover:text-cream"
+                  aria-label="Next testimonial"
+                >
+                  <ArrowRight size={20} />
+                </button>
+              </div>
             </div>
           </div>
         </div>

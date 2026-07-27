@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, X } from "lucide-react";
 import { MAIN_NAV, CORE_SERVICES, BUSINESS_OBJECTIVES } from "@/data/nav";
 import { SITE } from "@/data/site";
 import { Magnetic } from "@/components/motion/Magnetic";
@@ -47,7 +47,10 @@ export function Navbar() {
       <motion.header
         animate={{ y: hidden && !mobileOpen ? "-140%" : "0%" }}
         transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-        className="fixed left-0 right-0 top-0 z-[100] px-4 pt-4 md:pt-6"
+        className={cn(
+          "fixed left-0 right-0 top-0 px-4 pt-4 md:pt-6 transition-[z-index] duration-0",
+          mobileOpen ? "z-[200]" : "z-[100]"
+        )}
       >
         <div
           className={cn(
@@ -130,6 +133,24 @@ export function Navbar() {
             transition={{ duration: 0.7, ease: [0.77, 0, 0.175, 1] }}
             className="fixed inset-0 z-[150] bg-ink-950 flex flex-col justify-center px-5 md:px-12"
           >
+            {/* Close button — sits at top-right of the overlay, inside the menu
+                so it's always reachable. Mirrors the hamburger style. */}
+            <motion.button
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.8 }}
+              transition={{ delay: 0.2, duration: 0.3 }}
+              onClick={() => setMobileOpen(false)}
+              className="absolute top-4 right-4 md:top-6 md:right-6 flex h-11 w-11 items-center justify-center rounded-full bg-ink-900 border border-cream/10 hover:border-cream/30 transition-colors group z-[210]"
+              aria-label="Close menu"
+            >
+              <X
+                size={18}
+                strokeWidth={2}
+                className="text-cream transition-transform duration-300 group-hover:rotate-90"
+              />
+            </motion.button>
+
             <div className="container-fluid grid md:grid-cols-2 gap-12 lg:gap-24 items-center">
               {/* Menu Links */}
               <div className="flex flex-col gap-6">
