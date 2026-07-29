@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Linkedin, Instagram, Facebook, Youtube } from "lucide-react";
@@ -23,19 +23,25 @@ const STYLES = `
   font-family: 'Plus Jakarta Sans', sans-serif;
   -webkit-font-smoothing: antialiased;
 
-  /* Dynamic Variables using standard shadcn/tailwind v4 tokens */
-  --pill-bg-1: color-mix(in oklch, var(--foreground) 3%, transparent);
-  --pill-bg-2: color-mix(in oklch, var(--foreground) 1%, transparent);
-  --pill-shadow: color-mix(in oklch, var(--background) 50%, transparent);
-  --pill-highlight: color-mix(in oklch, var(--foreground) 10%, transparent);
-  --pill-inset-shadow: color-mix(in oklch, var(--background) 80%, transparent);
-  --pill-border: color-mix(in oklch, var(--foreground) 8%, transparent);
+  /* Lock to explicit black/white so behavior is identical on every monitor.
+     No reliance on theme tokens (--foreground / --background) that may
+     resolve to different colors on MacBook vs HP vs Linux. */
+  --footer-bg: #000000;
+  --footer-fg: #ffffff;
+  --footer-muted: rgba(255, 255, 255, 0.6);
 
-  --pill-bg-1-hover: color-mix(in oklch, var(--foreground) 8%, transparent);
-  --pill-bg-2-hover: color-mix(in oklch, var(--foreground) 2%, transparent);
-  --pill-border-hover: color-mix(in oklch, var(--foreground) 20%, transparent);
-  --pill-shadow-hover: color-mix(in oklch, var(--background) 70%, transparent);
-  --pill-highlight-hover: color-mix(in oklch, var(--foreground) 20%, transparent);
+  --pill-bg-1: rgba(255, 255, 255, 0.04);
+  --pill-bg-2: rgba(255, 255, 255, 0.01);
+  --pill-shadow: rgba(0, 0, 0, 0.5);
+  --pill-highlight: rgba(255, 255, 255, 0.12);
+  --pill-inset-shadow: rgba(0, 0, 0, 0.8);
+  --pill-border: rgba(255, 255, 255, 0.1);
+
+  --pill-bg-1-hover: rgba(252, 109, 58, 0.12);
+  --pill-bg-2-hover: rgba(252, 109, 58, 0.04);
+  --pill-border-hover: rgba(252, 109, 58, 0.5);
+  --pill-shadow-hover: rgba(0, 0, 0, 0.7);
+  --pill-highlight-hover: rgba(252, 109, 58, 0.3);
 }
 
 @keyframes footer-breathe {
@@ -66,22 +72,22 @@ const STYLES = `
   animation: footer-heartbeat 2s cubic-bezier(0.25, 1, 0.5, 1) infinite;
 }
 
-/* Theme-adaptive Grid Background */
+/* Grid Background — explicit white at 4% opacity, faded vertically */
 .footer-bg-grid {
   background-size: 60px 60px;
   background-image:
-    linear-gradient(to right, color-mix(in oklch, var(--foreground) 3%, transparent) 1px, transparent 1px),
-    linear-gradient(to bottom, color-mix(in oklch, var(--foreground) 3%, transparent) 1px, transparent 1px);
+    linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
   mask-image: linear-gradient(to bottom, transparent, black 30%, black 70%, transparent);
   -webkit-mask-image: linear-gradient(to bottom, transparent, black 30%, black 70%, transparent);
 }
 
-/* Theme-adaptive Aurora Glow */
+/* Aurora Glow — saffron accent, identical on every device */
 .footer-aurora {
   background: radial-gradient(
     circle at 50% 50%,
-    color-mix(in oklch, var(--primary) 15%, transparent) 0%,
-    color-mix(in oklch, var(--secondary) 15%, transparent) 40%,
+    rgba(252, 109, 58, 0.18) 0%,
+    rgba(234, 179, 8, 0.12) 40%,
     transparent 70%
   );
 }
@@ -105,29 +111,46 @@ const STYLES = `
   box-shadow:
       0 20px 40px -10px var(--pill-shadow-hover),
       inset 0 1px 1px var(--pill-highlight-hover);
-  color: var(--foreground);
+  color: #ffffff;
 }
 
-/* Giant Background Text Masking */
+/* Giant Background Text — yellow outline + vertical fade.
+   On hover (driven by [data-giant-hover="true"] on the element), the
+   stroke thickens and brightens so the outline "highlights". */
 .footer-giant-bg-text {
-  font-size: 26vw;
+  font-size: clamp(180px, 26vw, 480px);
   line-height: 0.75;
   font-weight: 900;
   letter-spacing: -0.05em;
   color: transparent;
-  -webkit-text-stroke: 1px color-mix(in oklch, #eab308 40%, transparent);
-  background: linear-gradient(180deg, color-mix(in oklch, #eab308 55%, transparent) 0%, transparent 60%);
+  -webkit-text-stroke: 1.5px rgba(234, 179, 8, 0.45);
+  stroke: rgba(234, 179, 8, 0.45);
+  stroke-width: 1.5;
+  background: linear-gradient(180deg, rgba(234, 179, 8, 0.6) 0%, transparent 62%);
   -webkit-background-clip: text;
   background-clip: text;
+  transition:
+    -webkit-text-stroke-width 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    stroke-width 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
 }
 
-/* Metallic Text Glow */
+.footer-giant-bg-text[data-giant-hover="true"] {
+  -webkit-text-stroke-width: 4px;
+  stroke-width: 4;
+  -webkit-text-stroke-color: rgba(234, 179, 8, 1);
+  stroke: rgba(234, 179, 8, 1);
+  filter: drop-shadow(0 0 24px rgba(234, 179, 8, 0.55));
+}
+
+/* Metallic Text Glow — pure white → muted white */
 .footer-text-glow {
-  background: linear-gradient(180deg, var(--foreground) 0%, color-mix(in oklch, var(--foreground) 40%, transparent) 100%);
+  background: linear-gradient(180deg, #ffffff 0%, rgba(255, 255, 255, 0.4) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  filter: drop-shadow(0px 0px 20px color-mix(in oklch, var(--foreground) 15%, transparent));
+  filter: drop-shadow(0px 0px 20px rgba(255, 255, 255, 0.15));
 }
 `;
 
@@ -213,11 +236,11 @@ MagneticButton.displayName = "MagneticButton";
 // -------------------------------------------------------------------------
 const MarqueeItem = () => (
   <div className="flex items-center space-x-12 px-6">
-    <span>Accountability Redefined</span> <span className="text-primary/60">✦</span>
-    <span>Transparent Tracking</span> <span className="text-secondary/60">✦</span>
-    <span>12-Step Progress</span> <span className="text-primary/60">✦</span>
-    <span>Sponsor Connection</span> <span className="text-secondary/60">✦</span>
-    <span>Absolute Privacy</span> <span className="text-primary/60">✦</span>
+    <span>Accountability Redefined</span> <span className="text-accent/70">✦</span>
+    <span>Transparent Tracking</span> <span className="text-white/30">✦</span>
+    <span>12-Step Progress</span> <span className="text-accent/70">✦</span>
+    <span>Sponsor Connection</span> <span className="text-white/30">✦</span>
+    <span>Absolute Privacy</span> <span className="text-accent/70">✦</span>
   </div>
 );
 
@@ -225,7 +248,9 @@ export function CinematicFooter() {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const giantTextRef = useRef<HTMLDivElement>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
+  const subheadingRef = useRef<HTMLParagraphElement>(null);
   const linksRef = useRef<HTMLDivElement>(null);
+  const [giantHovered, setGiantHovered] = useState(false);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -253,7 +278,7 @@ export function CinematicFooter() {
 
       // Staggered Content Reveal
       gsap.fromTo(
-        [headingRef.current, linksRef.current],
+        [headingRef.current, subheadingRef.current, linksRef.current].filter(Boolean),
         { y: 50, opacity: 0 },
         {
           y: 0,
@@ -291,40 +316,47 @@ export function CinematicFooter() {
         className="relative h-screen w-full"
         style={{ clipPath: "polygon(0% 0, 100% 0%, 100% 100%, 0 100%)" }}
       >
-        {/* The actual footer stays fixed to the viewport underneath everything */}
-        <footer className="fixed bottom-0 left-0 flex h-screen w-full flex-col justify-between overflow-hidden bg-background text-foreground cinematic-footer-wrapper">
+        {/* The actual footer stays fixed to the viewport underneath everything.
+            bg-black + text-white — explicit so the footer looks identical on
+            every device, regardless of any ambient theme tokens. */}
+        <footer className="fixed bottom-0 left-0 flex h-screen min-h-[640px] w-full flex-col justify-between overflow-hidden bg-black text-white cinematic-footer-wrapper">
 
           {/* Ambient Light & Grid Background */}
           <div className="footer-aurora absolute left-1/2 top-1/2 h-[60vh] w-[80vw] -translate-x-1/2 -translate-y-1/2 animate-footer-breathe rounded-[50%] blur-[80px] pointer-events-none z-0" />
           <div className="footer-bg-grid absolute inset-0 z-0 pointer-events-none" />
 
-          {/* Giant background text */}
+          {/* Giant background text — yellow outline that thickens on hover.
+              pointer-events restored (was none) so the cursor can interact. */}
           <div
             ref={giantTextRef}
-            className="footer-giant-bg-text absolute -bottom-[5vh] left-1/2 -translate-x-1/2 whitespace-nowrap z-0 pointer-events-none select-none"
+            data-giant-hover={giantHovered ? "true" : "false"}
+            onMouseEnter={() => setGiantHovered(true)}
+            onMouseLeave={() => setGiantHovered(false)}
+            className="footer-giant-bg-text absolute -bottom-[5vh] left-1/2 -translate-x-1/2 whitespace-nowrap z-0 select-none"
           >
             STEALTH
           </div>
 
           {/* 1. Diagonal Sleek Marquee (Top of footer) */}
-          <div className="absolute top-12 left-0 w-full overflow-hidden border-y border-border/50 bg-background/60 backdrop-blur-md py-4 z-10 -rotate-2 scale-110 shadow-2xl">
-            <div className="flex w-max animate-footer-scroll-marquee text-xs md:text-sm font-bold tracking-[0.3em] text-muted-foreground uppercase">
+          <div className="absolute top-[5vh] left-0 w-full overflow-hidden border-y border-white/10 bg-black/60 backdrop-blur-md py-4 z-10 -rotate-2 scale-110 shadow-2xl">
+            <div className="flex w-max animate-footer-scroll-marquee text-xs md:text-sm font-bold tracking-[0.3em] text-white/60 uppercase">
               <MarqueeItem />
               <MarqueeItem />
             </div>
           </div>
 
-          {/* 2. Main Center Content — shifted up so it doesn't overlap the giant STEALTH wordmark */}
-          <div className="relative z-10 flex flex-1 flex-col items-center justify-start px-6 pt-24 w-full max-w-5xl mx-auto">
+          {/* 2. Main Center Content — pt in vh so it lands in the same spot
+              on a 13" MacBook, a 24" HP, or a 6" phone. */}
+          <div className="relative z-10 flex flex-1 flex-col items-center justify-start px-6 pt-[10vh] w-full max-w-5xl mx-auto">
             <h2
               ref={headingRef}
-              className="text-5xl md:text-8xl font-black footer-text-glow tracking-tighter text-center"
+              className="text-5xl md:text-8xl font-black footer-text-glow tracking-tighter text-center text-white"
             >
               Let's talk.
             </h2>
             <p
-              ref={headingRef}
-              className="mt-6 max-w-2xl text-center text-base md:text-lg text-muted-foreground leading-relaxed"
+              ref={subheadingRef}
+              className="mt-[2vh] max-w-2xl text-center text-base md:text-lg text-white/60 leading-relaxed"
             >
               Stealth Digital — a Delhi NCR-based digital marketing agency. We help
               ambitious brands grow through SEO, paid media, social, and
@@ -332,7 +364,7 @@ export function CinematicFooter() {
             </p>
 
             {/* Interactive Magnetic Pills Layout */}
-            <div ref={linksRef} className="flex flex-col items-center gap-6 w-full">
+            <div ref={linksRef} className="flex flex-col items-center gap-[3vh] w-full">
               {/* Social Links (Primary) */}
               <div className="flex flex-wrap justify-center gap-4 w-full">
                 <MagneticButton
@@ -340,9 +372,9 @@ export function CinematicFooter() {
                   href={SITE.social.linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="footer-glass-pill px-10 py-5 rounded-full text-foreground font-bold text-sm md:text-base flex items-center gap-3 group"
+                  className="footer-glass-pill px-10 py-5 rounded-full text-white font-bold text-sm md:text-base flex items-center gap-3 group"
                 >
-                  <Linkedin className="w-6 h-6 text-muted-foreground group-hover:text-foreground transition-colors" strokeWidth={1.75} />
+                  <Linkedin className="w-6 h-6 text-white/60 group-hover:text-accent transition-colors" strokeWidth={1.75} />
                   LinkedIn
                 </MagneticButton>
 
@@ -351,9 +383,9 @@ export function CinematicFooter() {
                   href={SITE.social.instagram}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="footer-glass-pill px-10 py-5 rounded-full text-foreground font-bold text-sm md:text-base flex items-center gap-3 group"
+                  className="footer-glass-pill px-10 py-5 rounded-full text-white font-bold text-sm md:text-base flex items-center gap-3 group"
                 >
-                  <Instagram className="w-6 h-6 text-muted-foreground group-hover:text-foreground transition-colors" strokeWidth={1.75} />
+                  <Instagram className="w-6 h-6 text-white/60 group-hover:text-accent transition-colors" strokeWidth={1.75} />
                   Instagram
                 </MagneticButton>
 
@@ -362,9 +394,9 @@ export function CinematicFooter() {
                   href={SITE.social.facebook}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="footer-glass-pill px-10 py-5 rounded-full text-foreground font-bold text-sm md:text-base flex items-center gap-3 group"
+                  className="footer-glass-pill px-10 py-5 rounded-full text-white font-bold text-sm md:text-base flex items-center gap-3 group"
                 >
-                  <Facebook className="w-6 h-6 text-muted-foreground group-hover:text-foreground transition-colors" strokeWidth={1.75} />
+                  <Facebook className="w-6 h-6 text-white/60 group-hover:text-accent transition-colors" strokeWidth={1.75} />
                   Facebook
                 </MagneticButton>
 
@@ -373,34 +405,34 @@ export function CinematicFooter() {
                   href={SITE.social.youtube}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="footer-glass-pill px-10 py-5 rounded-full text-foreground font-bold text-sm md:text-base flex items-center gap-3 group"
+                  className="footer-glass-pill px-10 py-5 rounded-full text-white font-bold text-sm md:text-base flex items-center gap-3 group"
                 >
-                  <Youtube className="w-6 h-6 text-muted-foreground group-hover:text-foreground transition-colors" strokeWidth={1.75} />
+                  <Youtube className="w-6 h-6 text-white/60 group-hover:text-accent transition-colors" strokeWidth={1.75} />
                   YouTube
                 </MagneticButton>
               </div>
 
               {/* Secondary Text Links — Company + Legal in one row */}
               <div className="flex flex-wrap justify-center gap-3 md:gap-6 w-full mt-2">
-                <MagneticButton as="a" href="/about-us" className="footer-glass-pill px-6 py-3 rounded-full text-muted-foreground font-medium text-xs md:text-sm hover:text-foreground">
+                <MagneticButton as="a" href="/about-us" className="footer-glass-pill px-6 py-3 rounded-full text-white/60 font-medium text-xs md:text-sm hover:text-white">
                   About
                 </MagneticButton>
-                <MagneticButton as="a" href="/blog" className="footer-glass-pill px-6 py-3 rounded-full text-muted-foreground font-medium text-xs md:text-sm hover:text-foreground">
+                <MagneticButton as="a" href="/blog" className="footer-glass-pill px-6 py-3 rounded-full text-white/60 font-medium text-xs md:text-sm hover:text-white">
                   Journal
                 </MagneticButton>
-                <MagneticButton as="a" href="/#work" className="footer-glass-pill px-6 py-3 rounded-full text-muted-foreground font-medium text-xs md:text-sm hover:text-foreground">
+                <MagneticButton as="a" href="/#work" className="footer-glass-pill px-6 py-3 rounded-full text-white/60 font-medium text-xs md:text-sm hover:text-white">
                   Work
                 </MagneticButton>
-                <MagneticButton as="a" href="/contact-us" className="footer-glass-pill px-6 py-3 rounded-full text-muted-foreground font-medium text-xs md:text-sm hover:text-foreground">
+                <MagneticButton as="a" href="/contact-us" className="footer-glass-pill px-6 py-3 rounded-full text-white/60 font-medium text-xs md:text-sm hover:text-white">
                   Contact
                 </MagneticButton>
-                <MagneticButton as="a" href="#" className="footer-glass-pill px-6 py-3 rounded-full text-muted-foreground font-medium text-xs md:text-sm hover:text-foreground">
+                <MagneticButton as="a" href="#" className="footer-glass-pill px-6 py-3 rounded-full text-white/60 font-medium text-xs md:text-sm hover:text-white">
                   Privacy Policy
                 </MagneticButton>
-                <MagneticButton as="a" href="#" className="footer-glass-pill px-6 py-3 rounded-full text-muted-foreground font-medium text-xs md:text-sm hover:text-foreground">
+                <MagneticButton as="a" href="#" className="footer-glass-pill px-6 py-3 rounded-full text-white/60 font-medium text-xs md:text-sm hover:text-white">
                   Terms of Service
                 </MagneticButton>
-                <MagneticButton as="a" href="#" className="footer-glass-pill px-6 py-3 rounded-full text-muted-foreground font-medium text-xs md:text-sm hover:text-foreground">
+                <MagneticButton as="a" href="#" className="footer-glass-pill px-6 py-3 rounded-full text-white/60 font-medium text-xs md:text-sm hover:text-white">
                   Support
                 </MagneticButton>
               </div>
@@ -408,18 +440,18 @@ export function CinematicFooter() {
           </div>
 
           {/* 3. Bottom Bar / Credits */}
-          <div className="relative z-20 w-full pb-8 px-6 md:px-12 flex flex-col md:flex-row items-center justify-between gap-6">
+          <div className="relative z-20 w-full pb-[3vh] px-6 md:px-12 flex flex-col md:flex-row items-center justify-between gap-6">
 
             {/* Copyright */}
-            <div className="text-muted-foreground text-[10px] md:text-xs font-semibold tracking-widest uppercase order-2 md:order-1">
-              © 2026 Volvox. All rights reserved.
+            <div className="text-white/50 text-[10px] md:text-xs font-semibold tracking-widest uppercase order-2 md:order-1">
+              © {new Date().getFullYear()} Stealth Digital. All rights reserved.
             </div>
 
             {/* Back to top */}
             <MagneticButton
               as="button"
               onClick={scrollToTop}
-              className="w-12 h-12 rounded-full footer-glass-pill flex items-center justify-center text-muted-foreground hover:text-foreground group order-3"
+              className="w-12 h-12 rounded-full footer-glass-pill flex items-center justify-center text-white/60 hover:text-white group order-3"
             >
               <svg className="w-5 h-5 transform group-hover:-translate-y-1.5 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
