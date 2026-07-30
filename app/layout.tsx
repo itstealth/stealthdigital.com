@@ -10,6 +10,7 @@ import {
 import "./globals.css";
 import { Navbar } from "@/components/layout/Navbar";
 import { CinematicFooter } from "@/components/ui/motion-footer";
+import { MobileFooter } from "@/components/layout/MobileFooter";
 import { CustomCursor } from "@/components/motion/CustomCursor";
 import { SmoothScroll } from "@/components/motion/SmoothScroll";
 import { Preloader } from "@/components/motion/Preloader";
@@ -110,7 +111,12 @@ export default function RootLayout({
         <CustomCursor />
         <Navbar />
         <main className="relative">{children}</main>
-        <CinematicFooter />
+        <div className="hidden md:block">
+          <CinematicFooter />
+        </div>
+        <div className="md:hidden">
+          <MobileFooter />
+        </div>
       </body>
     </html>
   );
