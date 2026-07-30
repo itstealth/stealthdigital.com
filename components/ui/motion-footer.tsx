@@ -345,18 +345,19 @@ export function CinematicFooter() {
             </div>
           </div>
 
-          {/* 2. Main Center Content — pt in vh so it lands in the same spot
-              on a 13" MacBook, a 24" HP, or a 6" phone. */}
-          <div className="relative z-10 flex flex-1 flex-col items-center justify-start px-6 pt-[10vh] w-full max-w-5xl mx-auto">
+          {/* 2. Main Center Content — sized so heading, subheading, social
+              pills, and secondary links stay in the SAME visual position
+              across md → 2xl. (Mobile uses MobileFooter instead.) */}
+          <div className="relative z-10 flex flex-1 flex-col items-center justify-start px-6 pt-[10vh] w-full max-w-3xl mx-auto">
             <h2
               ref={headingRef}
-              className="text-5xl md:text-8xl font-black footer-text-glow tracking-tighter text-center text-white"
+              className="text-8xl font-black footer-text-glow tracking-tighter text-center text-white"
             >
               Let's talk.
             </h2>
             <p
               ref={subheadingRef}
-              className="mt-[2vh] max-w-2xl text-center text-base md:text-lg text-white/60 leading-relaxed"
+              className="mt-[2vh] max-w-2xl text-center text-lg text-white/60 leading-relaxed"
             >
               Stealth Digital — a Delhi NCR-based digital marketing agency. We help
               ambitious brands grow through SEO, paid media, social, and
@@ -365,16 +366,16 @@ export function CinematicFooter() {
 
             {/* Interactive Magnetic Pills Layout */}
             <div ref={linksRef} className="flex flex-col items-center gap-[3vh] w-full">
-              {/* Social Links (Primary) */}
-              <div className="flex flex-wrap justify-center gap-4 w-full">
+              {/* Social Links (Primary) — always one row of 4 from md up */}
+              <div className="flex flex-nowrap justify-center gap-4 w-full">
                 <MagneticButton
                   as="a"
                   href={SITE.social.linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="footer-glass-pill px-10 py-5 rounded-full text-white font-bold text-sm md:text-base flex items-center gap-3 group"
+                  className="footer-glass-pill px-6 md:px-8 py-4 md:py-5 rounded-full text-white font-bold text-sm md:text-base flex items-center gap-3 group whitespace-nowrap shrink-0"
                 >
-                  <Linkedin className="w-6 h-6 text-white/60 group-hover:text-accent transition-colors" strokeWidth={1.75} />
+                  <Linkedin className="w-5 h-5 md:w-6 md:h-6 text-white/60 group-hover:text-accent transition-colors" strokeWidth={1.75} />
                   LinkedIn
                 </MagneticButton>
 
@@ -383,9 +384,9 @@ export function CinematicFooter() {
                   href={SITE.social.instagram}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="footer-glass-pill px-10 py-5 rounded-full text-white font-bold text-sm md:text-base flex items-center gap-3 group"
+                  className="footer-glass-pill px-6 md:px-8 py-4 md:py-5 rounded-full text-white font-bold text-sm md:text-base flex items-center gap-3 group whitespace-nowrap shrink-0"
                 >
-                  <Instagram className="w-6 h-6 text-white/60 group-hover:text-accent transition-colors" strokeWidth={1.75} />
+                  <Instagram className="w-5 h-5 md:w-6 md:h-6 text-white/60 group-hover:text-accent transition-colors" strokeWidth={1.75} />
                   Instagram
                 </MagneticButton>
 
@@ -394,9 +395,9 @@ export function CinematicFooter() {
                   href={SITE.social.facebook}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="footer-glass-pill px-10 py-5 rounded-full text-white font-bold text-sm md:text-base flex items-center gap-3 group"
+                  className="footer-glass-pill px-6 md:px-8 py-4 md:py-5 rounded-full text-white font-bold text-sm md:text-base flex items-center gap-3 group whitespace-nowrap shrink-0"
                 >
-                  <Facebook className="w-6 h-6 text-white/60 group-hover:text-accent transition-colors" strokeWidth={1.75} />
+                  <Facebook className="w-5 h-5 md:w-6 md:h-6 text-white/60 group-hover:text-accent transition-colors" strokeWidth={1.75} />
                   Facebook
                 </MagneticButton>
 
@@ -405,34 +406,36 @@ export function CinematicFooter() {
                   href={SITE.social.youtube}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="footer-glass-pill px-10 py-5 rounded-full text-white font-bold text-sm md:text-base flex items-center gap-3 group"
+                  className="footer-glass-pill px-6 md:px-8 py-4 md:py-5 rounded-full text-white font-bold text-sm md:text-base flex items-center gap-3 group whitespace-nowrap shrink-0"
                 >
-                  <Youtube className="w-6 h-6 text-white/60 group-hover:text-accent transition-colors" strokeWidth={1.75} />
+                  <Youtube className="w-5 h-5 md:w-6 md:h-6 text-white/60 group-hover:text-accent transition-colors" strokeWidth={1.75} />
                   YouTube
                 </MagneticButton>
               </div>
 
-              {/* Secondary Text Links — Company + Legal in one row */}
-              <div className="flex flex-wrap justify-center gap-3 md:gap-6 w-full mt-2">
-                <MagneticButton as="a" href="/about-us" className="footer-glass-pill px-6 py-3 rounded-full text-white/60 font-medium text-xs md:text-sm hover:text-white">
+              {/* Secondary Text Links — Company + Legal in one row,
+                  always 7 across from md up. Smaller padding so all 7 fit
+                  at the 768px md breakpoint. */}
+              <div className="flex flex-nowrap justify-center gap-2 md:gap-3 w-full mt-2 overflow-x-auto">
+                <MagneticButton as="a" href="/about-us" className="footer-glass-pill px-4 md:px-5 py-2 md:py-3 rounded-full text-white/60 font-medium text-xs md:text-sm hover:text-white whitespace-nowrap shrink-0">
                   About
                 </MagneticButton>
-                <MagneticButton as="a" href="/blog" className="footer-glass-pill px-6 py-3 rounded-full text-white/60 font-medium text-xs md:text-sm hover:text-white">
+                <MagneticButton as="a" href="/blog" className="footer-glass-pill px-4 md:px-5 py-2 md:py-3 rounded-full text-white/60 font-medium text-xs md:text-sm hover:text-white whitespace-nowrap shrink-0">
                   Journal
                 </MagneticButton>
-                <MagneticButton as="a" href="/#work" className="footer-glass-pill px-6 py-3 rounded-full text-white/60 font-medium text-xs md:text-sm hover:text-white">
+                <MagneticButton as="a" href="/#work" className="footer-glass-pill px-4 md:px-5 py-2 md:py-3 rounded-full text-white/60 font-medium text-xs md:text-sm hover:text-white whitespace-nowrap shrink-0">
                   Work
                 </MagneticButton>
-                <MagneticButton as="a" href="/contact-us" className="footer-glass-pill px-6 py-3 rounded-full text-white/60 font-medium text-xs md:text-sm hover:text-white">
+                <MagneticButton as="a" href="/contact-us" className="footer-glass-pill px-4 md:px-5 py-2 md:py-3 rounded-full text-white/60 font-medium text-xs md:text-sm hover:text-white whitespace-nowrap shrink-0">
                   Contact
                 </MagneticButton>
-                <MagneticButton as="a" href="#" className="footer-glass-pill px-6 py-3 rounded-full text-white/60 font-medium text-xs md:text-sm hover:text-white">
+                <MagneticButton as="a" href="#" className="footer-glass-pill px-4 md:px-5 py-2 md:py-3 rounded-full text-white/60 font-medium text-xs md:text-sm hover:text-white whitespace-nowrap shrink-0">
                   Privacy Policy
                 </MagneticButton>
-                <MagneticButton as="a" href="#" className="footer-glass-pill px-6 py-3 rounded-full text-white/60 font-medium text-xs md:text-sm hover:text-white">
+                <MagneticButton as="a" href="#" className="footer-glass-pill px-4 md:px-5 py-2 md:py-3 rounded-full text-white/60 font-medium text-xs md:text-sm hover:text-white whitespace-nowrap shrink-0">
                   Terms of Service
                 </MagneticButton>
-                <MagneticButton as="a" href="#" className="footer-glass-pill px-6 py-3 rounded-full text-white/60 font-medium text-xs md:text-sm hover:text-white">
+                <MagneticButton as="a" href="#" className="footer-glass-pill px-4 md:px-5 py-2 md:py-3 rounded-full text-white/60 font-medium text-xs md:text-sm hover:text-white whitespace-nowrap shrink-0">
                   Support
                 </MagneticButton>
               </div>
@@ -440,10 +443,10 @@ export function CinematicFooter() {
           </div>
 
           {/* 3. Bottom Bar / Credits */}
-          <div className="relative z-20 w-full pb-[3vh] px-6 md:px-12 flex flex-col md:flex-row items-center justify-between gap-6">
+          <div className="relative z-20 w-full pb-[3vh] px-6 md:px-12 flex flex-row items-center justify-between gap-6">
 
             {/* Copyright */}
-            <div className="text-white/50 text-[10px] md:text-xs font-semibold tracking-widest uppercase order-2 md:order-1">
+            <div className="text-white/50 text-xs font-semibold tracking-widest uppercase">
               © {new Date().getFullYear()} Stealth Digital. All rights reserved.
             </div>
 
@@ -451,7 +454,7 @@ export function CinematicFooter() {
             <MagneticButton
               as="button"
               onClick={scrollToTop}
-              className="w-12 h-12 rounded-full footer-glass-pill flex items-center justify-center text-white/60 hover:text-white group order-3"
+              className="w-12 h-12 rounded-full footer-glass-pill flex items-center justify-center text-white/60 hover:text-white group"
             >
               <svg className="w-5 h-5 transform group-hover:-translate-y-1.5 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>

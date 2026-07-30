@@ -8,12 +8,18 @@ import { Parallax } from "@/components/motion/Parallax";
 import { SERVICES } from "@/data/services";
 import { Process } from "@/components/sections/Process";
 import { CTA } from "@/components/sections/CTA";
+import { InteractiveRobotSpline } from "@/components/ui/interactive-3d-robot";
 
 export const metadata: Metadata = {
   title: "Services",
   description:
     "SEO, SEM/PPC, Social Media, and Web Design — full-stack growth services from Delhi NCR.",
 };
+
+// Spline scene for the interactive 3D robot sitting on the right side
+// of the services hero. Lazy-loaded via React.lazy inside the wrapper.
+const ROBOT_SCENE_URL =
+  "https://prod.spline.design/PyzDhpQ9E5f1E3MT/scene.splinecode";
 
 export default function ServicesPage() {
   return (
@@ -22,6 +28,12 @@ export default function ServicesPage() {
         eyebrow="What We Do"
         title="Full-stack growth, four disciplines deep."
         description="We don't do 'marketing'. We do SEO, paid media, social, and web — integrated into a single growth system. Pick one, or all."
+        aside={
+          <InteractiveRobotSpline
+            scene={ROBOT_SCENE_URL}
+            className="absolute inset-0 w-full h-full"
+          />
+        }
       />
 
       <section className="py-20 md:py-32">
