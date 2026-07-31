@@ -218,3 +218,29 @@
     transform: translate3d(-50%, 0, 0);
   }
 }
+
+/*
+ * Process stack — sticky desktop, normal flow on mobile.
+ * Applied via the .process-card / .process-stack utility classes added
+ * to components/sections/Process.tsx.
+ */
+.process-stack > .process-card {
+  position: relative;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .process-stack > .process-card {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+  }
+}
+
+@media (max-width: 767px) {
+  .process-stack > .process-card {
+    position: relative;
+    height: auto;
+    min-height: 80vh;
+  }
+}

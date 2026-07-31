@@ -1,284 +1,317 @@
 "use client";
 
+import { Search, Target, Code, TrendingUp, type LucideIcon } from "lucide-react";
 import { Reveal } from "@/components/motion/Reveal";
-import { AdmitOneTicket } from "@/components/ui/admit-one-ticket";
+import TextBlockAnimation from "@/components/ui/text-block-animation";
 
-type Step = Omit<React.ComponentProps<typeof AdmitOneTicket>, "tilt"> & {
+type PhaseRow = { period: string; title: string; body: string };
+
+interface ProcessCardProps {
   step: string;
+  kicker: string;
   title: string;
+  actionVerbs: { text: string; accent?: boolean }[];
+  lede: string;
   description: string;
-};
+  bg: string;
+  fg: string;
+  kickerClass: string;
+  bodyClass: string;
+  metaClass: string;
+  divider: string;
+  iconColor: string;
+  icon: LucideIcon;
+  rows: PhaseRow[];
+  closing: string;
+}
+
+/**
+ * ProcessCard — one full-bleed sticky phase card. Position: sticky keeps each
+ * card pinned at top:0 while the next card flows up from below and covers it.
+ * iOS Safari caveat: avoid `transform` on the same element as `sticky`,
+ * keep ancestors free of `overflow: hidden`.
+ */
+function ProcessCard({
+  step,
+  kicker,
+  actionVerbs,
+  lede,
+  description,
+  bg,
+  fg,
+  kickerClass,
+  bodyClass,
+  metaClass,
+  divider,
+  iconColor,
+  icon: Icon,
+  rows,
+  closing,
+}: ProcessCardProps) {
+  return (
+    <section
+      aria-label={kicker}
+      className="process-card w-full"
+      style={{ backgroundColor: bg, color: fg }}
+    >
+      <div className="relative flex h-full w-full flex-col gap-6 overflow-hidden px-[4vw] pt-[clamp(2rem,8vw,4vw)] pb-[4vw]">
+        <p
+          className={`font-mono text-xs font-bold uppercase tracking-[0.2em] ${kickerClass}`}
+        >
+          {kicker}
+        </p>
+
+        <hr className="my-[1.5vw] border-none border-t" style={{ borderColor: divider }} />
+
+        <h3
+          id={`phase-${step}-title`}
+          className="text-[clamp(2rem,8vw,5.5rem)] font-display font-bold uppercase leading-[0.9] tracking-tight"
+        >
+          {actionVerbs.map((v, i) => (
+            <span key={i}>
+              {i > 0 && <br />}
+              {v.accent ? (
+                <span className="text-accent">{v.text}</span>
+              ) : (
+                v.text
+              )}
+            </span>
+          ))}
+        </h3>
+
+        <p
+          className={`max-w-[42ch] text-[clamp(1.25rem,3vw,2rem)] font-display font-medium leading-[1.15] tracking-tight italic ${bodyClass}`}
+        >
+          {lede}
+        </p>
+
+        <hr className="my-[1.5vw] border-none border-t" style={{ borderColor: divider }} />
+
+        <p
+          className={`max-w-[50ch] text-[clamp(1rem,2.2vw,1.6rem)] font-sans leading-relaxed ${bodyClass}`}
+        >
+          {description}
+        </p>
+
+        <hr className="my-[1.5vw] border-none border-t" style={{ borderColor: divider }} />
+
+        <div className="flex flex-wrap gap-[3vw]">
+          {rows.map((r, i) => {
+            const isFirst = i === 0;
+            return (
+              <div key={r.period} className="min-w-[180px] flex-1">
+                {isFirst && (
+                  <Icon
+                    className={`mb-3 h-6 w-6 ${iconColor}`}
+                    strokeWidth={1.5}
+                  />
+                )}
+                <p
+                  className={`mb-1 text-sm font-mono uppercase tracking-[0.2em] ${metaClass}`}
+                >
+                  {r.period}
+                </p>
+                <p className={`text-sm leading-relaxed ${metaClass}`}>{r.body}</p>
+              </div>
+            );
+          })}
+        </div>
+
+        <hr className="my-[1.5vw] border-none border-t" style={{ borderColor: divider }} />
+
+        <p
+          className={`mt-auto ml-auto max-w-[50ch] text-right text-[clamp(1rem,2.2vw,1.6rem)] font-sans leading-relaxed ${bodyClass}`}
+        >
+          {closing}
+        </p>
+      </div>
+    </section>
+  );
+}
+
+const PROCESS_PHASES: ProcessCardProps[] = [
+  {
+    step: "01",
+    kicker: "Phase 01 — Stealth Process",
+    title: "Discover",
+    actionVerbs: [{ text: "Listen." }, { text: "Audit." }, { text: "Map.", accent: true }],
+    lede: "We learn who you are — and what you've actually tried — before we propose anything.",
+    description:
+      "We dig into your business, audience, competitors, and numbers. The audit reveals opportunities and gaps most teams never see.",
+    bg: "#0A0A0A",
+    fg: "#FFFFFF",
+    kickerClass: "text-accent",
+    bodyClass: "text-cream/70",
+    metaClass: "text-cream/40",
+    divider: "rgba(255,255,255,0.15)",
+    iconColor: "text-accent",
+    icon: Search,
+    rows: [
+      {
+        period: "Week 1",
+        title: "Discover week 1",
+        body: "Stakeholder interviews, channel audit, competitor teardown.",
+      },
+      {
+        period: "Week 2",
+        title: "Discover week 2",
+        body: "Funnel review, attribution check, ICP refinement. Findings memo delivered.",
+      },
+    ],
+    closing: "The best strategies start with the best questions.",
+  },
+  {
+    step: "02",
+    kicker: "Phase 02 — Stealth Process",
+    title: "Strategise",
+    actionVerbs: [{ text: "Plan." }, { text: "Prioritise." }, { text: "Commit." }],
+    lede: "A 90-day plan you can actually execute against — not a 60-page slide deck that rots in a folder.",
+    description:
+      "A bespoke plan — channel mix, budget allocation, KPIs, and a 90-day roadmap. Every recommendation tied to revenue.",
+    bg: "#FFD60A",
+    fg: "#0A0A0A",
+    kickerClass: "text-ink-950",
+    bodyClass: "text-ink-950/80",
+    metaClass: "text-ink-950/50",
+    divider: "rgba(10,10,10,0.30)",
+    iconColor: "text-ink-950",
+    icon: Target,
+    rows: [
+      {
+        period: "Channel mix",
+        title: "Strategise channel mix",
+        body: "SEO, paid, social, content — weighted by your margin and intent signal.",
+      },
+      {
+        period: "Budget split",
+        title: "Strategise budget split",
+        body: "Quarterly reforecast based on ROAS by channel. No more spreadsheet archaeology.",
+      },
+      {
+        period: "KPIs",
+        title: "Strategise KPIs",
+        body: "Pipeline value, CAC payback, blended ROAS. Tied to your finance calendar.",
+      },
+    ],
+    closing: "Done beats perfect. We ship a 90-day plan and start the clock.",
+  },
+  {
+    step: "03",
+    kicker: "Phase 03 — Stealth Process",
+    title: "Execute",
+    actionVerbs: [{ text: "Build." }, { text: "Ship." }, { text: "Measure." }],
+    lede: "One team. SEO, paid, design, code — moving in the same direction at the same time.",
+    description:
+      "We ship creative, build landing pages, launch campaigns, write code. Fast turnaround. High standards. Transparent reporting.",
+    bg: "#F5F0E8",
+    fg: "#0A0A0A",
+    kickerClass: "text-ink-950",
+    bodyClass: "text-ink-950/80",
+    metaClass: "text-ink-950/50",
+    divider: "rgba(10,10,10,0.20)",
+    iconColor: "text-ink-950",
+    icon: Code,
+    rows: [
+      {
+        period: "Creative",
+        title: "Execute creative",
+        body: "Ad sets, landing pages, social, email — built in-house, on brand, on time.",
+      },
+      {
+        period: "Engineering",
+        title: "Execute engineering",
+        body: "Tracking setup, schema, on-page SEO, custom integrations. Clean handoffs.",
+      },
+      {
+        period: "Reporting",
+        title: "Execute reporting",
+        body: "Live Looker Studio dashboards. Weekly notes, no fluff.",
+      },
+    ],
+    closing:
+      "We move as one team — SEO, paid, social, design, and code, integrated under a single strategy.",
+  },
+  {
+    step: "04",
+    kicker: "Phase 04 — Stealth Process",
+    title: "Optimise",
+    actionVerbs: [{ text: "Test." }, { text: "Learn." }, { text: "Compound.", accent: true }],
+    lede: "We turn early wins into durable, compounding growth — and we don't ship work that doesn't move a metric.",
+    description:
+      "Weekly experiments. Quarterly reviews. We double down on what works, cut what doesn't, and compound growth month over month.",
+    bg: "#111111",
+    fg: "#FFFFFF",
+    kickerClass: "text-accent",
+    bodyClass: "text-cream/70",
+    metaClass: "text-cream/40",
+    divider: "rgba(255,255,255,0.15)",
+    iconColor: "text-accent",
+    icon: TrendingUp,
+    rows: [
+      {
+        period: "Weekly",
+        title: "Optimise weekly",
+        body: "A/B tests on creative, copy, and landing pages. Documented in a single changelog.",
+      },
+      {
+        period: "Quarterly",
+        title: "Optimise quarterly",
+        body: "Channel rebalancing, budget reforecast, and strategy review with your leadership team.",
+      },
+      {
+        period: "Annually",
+        title: "Optimise annually",
+        body: "Brand + market refresh. New positioning, new creative directions, new audiences.",
+      },
+    ],
+    closing: "Most clients stay 3+ years. That's not sales — that's compounding trust.",
+  },
+];
 
 /**
  * Process — "The Process." section, placed just below the Awards section.
  *
- * Each step is rendered as an interactive AdmitOneTicket (paper-shader
- * WebGL ticket with 3D tilt-on-hover). The ticket carries the step's
- * title as the main "name" line, with phase / venue / dates on the
- * metadata rows.
+ * Renders the section header, then a sticky-stacked list of four full-bleed
+ * phase cards. Each card is `sticky top-0 h-screen`; subsequent cards
+ * naturally cover their predecessors as the user scrolls. On mobile (<768px)
+ * the sticky is dropped — see globals.css for the responsive behaviour.
  */
-
-const PROCESS: Step[] = [
-  {
-    step: "01",
-    title: "Discover",
-    description:
-      "We dig into your business, audience, competitors, and numbers. The audit reveals opportunities and gaps most teams never see.",
-    name: "Discover",
-    presenter: "Phase 01 — Stealth Process",
-    event: "Foundation audit",
-    venue: "Delhi NCR",
-    dates: "Week 1–2",
-    stubText: "Audit",
-    watermark: "2026",
-    texture: {
-      engine: "generative",
-      colorBack: "#080808",
-      colorFront: "#FC6D3A",
-      colorHighlight: "#ffdcbe",
-      shape: "warp",
-      type: "random",
-      size: 0.6,
-      colorSteps: 4,
-      originalColors: true,
-      scale: 1,
-      rotation: 0,
-      offsetX: 0,
-      offsetY: 0,
-      speed: 0.4,
-    },
-    layout: {
-      padding: 57 / 741,
-      labelTop: 58 / 741,
-      labelSize: 22 / 741,
-      labelLead: 28 / 741,
-      labelTracking: 0.04,
-      nameTop: 165 / 741,
-      nameSize: 78 / 741,
-      nameLead: 65 / 741,
-      nameTracking: -0.01,
-      footerTop: 318 / 741,
-      footerSize: 18 / 741,
-      footerTracking: 0.04,
-      stubSize: 60 / 741,
-      stubTracking: 0,
-      stubOpacity: 0.85,
-      watermarkSize: 130 / 741,
-      watermarkOpacity: 0.55,
-      watermarkColor: "#ffdcbe",
-      inkColor: "#ffdcbe",
-    },
-  },
-  {
-    step: "02",
-    title: "Strategise",
-    description:
-      "A bespoke plan — channel mix, budget allocation, KPIs, and a 90-day roadmap. Every recommendation tied to revenue.",
-    name: "Strategise",
-    presenter: "Phase 02 — Stealth Process",
-    event: "90-day roadmap",
-    venue: "Delhi NCR",
-    dates: "Week 3–4",
-    stubText: "Plan",
-    watermark: "2026",
-    texture: {
-      engine: "generative",
-      colorBack: "#0a0a0a",
-      colorFront: "#eab308",
-      colorHighlight: "#fef3c7",
-      shape: "ripple",
-      type: "4x4",
-      size: 1.2,
-      colorSteps: 4,
-      originalColors: true,
-      scale: 1,
-      rotation: 0,
-      offsetX: 0,
-      offsetY: 0,
-      speed: 0.35,
-    },
-    layout: {
-      padding: 57 / 741,
-      labelTop: 58 / 741,
-      labelSize: 22 / 741,
-      labelLead: 28 / 741,
-      labelTracking: 0.04,
-      nameTop: 165 / 741,
-      nameSize: 78 / 741,
-      nameLead: 65 / 741,
-      nameTracking: -0.01,
-      footerTop: 318 / 741,
-      footerSize: 18 / 741,
-      footerTracking: 0.04,
-      stubSize: 60 / 741,
-      stubTracking: 0,
-      stubOpacity: 0.85,
-      watermarkSize: 130 / 741,
-      watermarkOpacity: 0.55,
-      watermarkColor: "#fef3c7",
-      inkColor: "#fef3c7",
-    },
-  },
-  {
-    step: "03",
-    title: "Execute",
-    description:
-      "We ship creative, build landing pages, launch campaigns, write code. Fast turnaround. High standards. Transparent reporting.",
-    name: "Execute",
-    presenter: "Phase 03 — Stealth Process",
-    event: "Build & launch",
-    venue: "Delhi NCR",
-    dates: "Week 5–10",
-    stubText: "Ship",
-    watermark: "2026",
-    texture: {
-      engine: "generative",
-      colorBack: "#080808",
-      colorFront: "#FC6D3A",
-      colorHighlight: "#ffdcbe",
-      shape: "swirl",
-      type: "2x2",
-      size: 1.8,
-      colorSteps: 5,
-      originalColors: true,
-      scale: 1.1,
-      rotation: 0,
-      offsetX: 0,
-      offsetY: 0,
-      speed: 0.5,
-    },
-    layout: {
-      padding: 57 / 741,
-      labelTop: 58 / 741,
-      labelSize: 22 / 741,
-      labelLead: 28 / 741,
-      labelTracking: 0.04,
-      nameTop: 165 / 741,
-      nameSize: 78 / 741,
-      nameLead: 65 / 741,
-      nameTracking: -0.01,
-      footerTop: 318 / 741,
-      footerSize: 18 / 741,
-      footerTracking: 0.04,
-      stubSize: 60 / 741,
-      stubTracking: 0,
-      stubOpacity: 0.85,
-      watermarkSize: 130 / 741,
-      watermarkOpacity: 0.55,
-      watermarkColor: "#ffdcbe",
-      inkColor: "#ffdcbe",
-    },
-  },
-  {
-    step: "04",
-    title: "Optimise",
-    description:
-      "Weekly experiments. Quarterly reviews. We double down on what works, cut what doesn't, and compound growth month over month.",
-    name: "Optimise",
-    presenter: "Phase 04 — Stealth Process",
-    event: "Compounding growth",
-    venue: "Delhi NCR",
-    dates: "Ongoing",
-    stubText: "Scale",
-    watermark: "2026",
-    texture: {
-      engine: "generative",
-      colorBack: "#0a0a0a",
-      colorFront: "#eab308",
-      colorHighlight: "#fef3c7",
-      shape: "sphere",
-      type: "8x8",
-      size: 1.5,
-      colorSteps: 5,
-      originalColors: true,
-      scale: 1,
-      rotation: 0,
-      offsetX: 0,
-      offsetY: 0,
-      speed: 0.3,
-    },
-    layout: {
-      padding: 57 / 741,
-      labelTop: 58 / 741,
-      labelSize: 22 / 741,
-      labelLead: 28 / 741,
-      labelTracking: 0.04,
-      nameTop: 165 / 741,
-      nameSize: 78 / 741,
-      nameLead: 65 / 741,
-      nameTracking: -0.01,
-      footerTop: 318 / 741,
-      footerSize: 18 / 741,
-      footerTracking: 0.04,
-      stubSize: 60 / 741,
-      stubTracking: 0,
-      stubOpacity: 0.85,
-      watermarkSize: 130 / 741,
-      watermarkOpacity: 0.55,
-      watermarkColor: "#fef3c7",
-      inkColor: "#fef3c7",
-    },
-  },
-];
-
 export function Process() {
   return (
-    <section className="relative py-24 md:py-40 bg-ink-950">
+    <section id="process" className="relative bg-ink-950">
       <div className="container-fluid">
         <Reveal variant="up">
-          <div className="max-w-4xl mb-16 md:mb-24 px-4 md:px-8">
-            <h2 className="font-display text-[9vw] font-bold leading-[0.9] tracking-[-0.04em] text-cream">
-              The Process.
-            </h2>
-            <p className="mt-8 text-xl md:text-2xl text-cream/50 max-w-2xl font-sans">
-              A proven four-phase methodology. Built from 500+ engagements — refined into a system that compounds growth.
+          <div className="max-w-4xl mb-6 px-4 md:mb-10 md:px-8">
+            <TextBlockAnimation blockColor="#FFD60A">
+              <h2 className="font-display text-[9vw] font-bold leading-[0.9] tracking-[-0.04em] text-cream">
+                The Process.
+              </h2>
+            </TextBlockAnimation>
+            <p className="mt-6 max-w-2xl text-xl text-cream/50 font-sans md:text-2xl">
+              A proven four-phase methodology. Built from 500+ engagements —
+              refined into a system that compounds growth.
             </p>
           </div>
         </Reveal>
+      </div>
 
-        <div className="grid gap-8 md:gap-6 lg:gap-8 md:grid-cols-2 lg:grid-cols-4 px-4 md:px-8">
-          {PROCESS.map((p, i) => (
-            <Reveal
-              key={p.step}
-              variant="up"
-              delay={i * 0.08}
-              className="flex justify-center"
-            >
-              <AdmitOneTicket
-                name={p.name}
-                presenter={p.presenter}
-                event={p.event}
-                venue={p.venue}
-                dates={p.dates}
-                stubText={p.stubText}
-                watermark={p.watermark}
-                texture={p.texture}
-                layout={p.layout}
-                width={320}
-                tilt
-              />
-            </Reveal>
-          ))}
-        </div>
-
-        {/* Step descriptions — kept below the tickets so users can read
-            the methodology summary without the description text fighting
-            the ticket's own typography. */}
-        <div className="mt-12 md:mt-16 grid gap-8 md:gap-6 lg:gap-8 md:grid-cols-2 lg:grid-cols-4 px-4 md:px-8">
-          {PROCESS.map((p) => (
-            <div key={p.step} className="text-center">
-              <div className="font-mono text-xs uppercase tracking-[0.2em] text-cream/40 mb-3">
-                Step {p.step}
-              </div>
-              <h3 className="font-display text-2xl md:text-3xl font-bold text-cream mb-3 tracking-tight">
-                {p.title}
-              </h3>
-              <p className="text-cream/60 leading-relaxed text-sm font-sans max-w-xs mx-auto">
-                {p.description}
-              </p>
-            </div>
-          ))}
-        </div>
+      {/*
+        Sticky stack: four sibling sections inside .process-stack. Each
+        section positions itself `sticky top-0` (desktop) so they overlap
+        in source order. Globals handle the mobile drop of sticky.
+      */}
+      {/*
+        Sticky stack: four sibling sections inside .process-stack. Each
+        card's sticky / height behaviour is owned by globals.css
+        (`.process-stack > .process-card`). Do NOT wrap the cards (or
+        their inner content) in `TextBlockAnimation`, `Reveal`, or any
+        other element that applies a CSS `transform` — that breaks
+        `position: sticky` on Safari.
+      */}
+      <div className="process-stack relative w-full">
+        {PROCESS_PHASES.map((p) => (
+          <ProcessCard key={p.step} {...p} />
+        ))}
       </div>
     </section>
   );
