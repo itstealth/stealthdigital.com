@@ -4,6 +4,7 @@ import { ArrowUpRight, Search, Target, Share2, Code, Sparkles, PenTool, type Luc
 import Image from "next/image";
 import Link from "next/link";
 import { Marquee } from "@/components/motion/Marquee";
+import TextBlockAnimation from "@/components/ui/text-block-animation";
 import { SERVICES, type Service } from "@/data/services";
 
 /**
@@ -153,9 +154,11 @@ export function WhatWeDo() {
           <span className="font-mono text-xs uppercase tracking-[0.3em] text-cream/50">
             What we do
           </span>
-          <h2 className="mt-6 font-display text-[9vw] font-bold leading-[0.9] tracking-[-0.04em] text-cream md:text-[7vw]">
-            What we do.
-          </h2>
+          <TextBlockAnimation blockColor="#FFD60A">
+            <h2 className="mt-6 font-display text-[9vw] font-bold leading-[0.9] tracking-[-0.04em] text-cream md:text-[7vw]">
+              What we do.
+            </h2>
+          </TextBlockAnimation>
           <p className="mt-8 text-xl md:text-2xl text-cream/50 max-w-2xl font-sans">
             From strategy to execution, we craft digital products that redefine
             what&rsquo;s possible for your brand.

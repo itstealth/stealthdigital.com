@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { Reveal } from "@/components/motion/Reveal";
 import { Parallax } from "@/components/motion/Parallax";
+import TextBlockAnimation from "@/components/ui/text-block-animation";
 import { CASE_STUDIES } from "@/data/caseStudies";
 
 export function FeaturedWork() {
@@ -14,9 +15,11 @@ export function FeaturedWork() {
       <div className="container-fluid">
         <Reveal variant="up">
           <div className="flex flex-col gap-6 mb-16 md:mb-24 md:flex-row md:items-end md:justify-between px-4 md:px-8">
-            <h2 className="font-display text-[11vw] font-bold leading-[0.9] tracking-[-0.04em] text-cream">
-              Work.
-            </h2>
+            <TextBlockAnimation blockColor="#FFD60A">
+              <h2 className="font-display text-[11vw] font-bold leading-[0.9] tracking-[-0.04em] text-cream">
+                Work.
+              </h2>
+            </TextBlockAnimation>
             <p className="text-cream/50 max-w-sm md:text-right font-sans text-lg mb-2">
               Recent case studies across education, D2C, and B2B. We deliver measurable growth.
             </p>

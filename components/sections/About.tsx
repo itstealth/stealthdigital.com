@@ -4,6 +4,7 @@ import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/motion/Reveal";
+import TextBlockAnimation from "@/components/ui/text-block-animation";
 
 /**
  * About — "Better Growth Starts With the Right Partner" section.
@@ -44,9 +45,11 @@ export function About() {
               <span className="h-px w-8 bg-accent" />
               [About Stealth Digital]
             </div>
-            <h2 className="font-display text-[9vw] md:text-[6vw] font-bold leading-[0.95] tracking-[-0.04em] text-cream text-balance">
-              Better Growth Starts With the Right Partner.
-            </h2>
+            <TextBlockAnimation blockColor="#FFD60A">
+              <h2 className="font-display text-[9vw] md:text-[6vw] font-bold leading-[0.95] tracking-[-0.04em] text-cream">
+                Better Growth Starts With the Right Partner.
+              </h2>
+            </TextBlockAnimation>
             <p className="mt-8 text-lg md:text-xl text-cream/70 leading-relaxed max-w-2xl font-sans">
               Growth becomes easier with the right team beside you. We take time
               to understand your goals, provide clear guidance, and build digital

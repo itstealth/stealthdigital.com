@@ -1,17 +1,15 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
-import { PageHero } from "@/components/sections/PageHero";
 import { Reveal, type FadeDelay } from "@/components/motion/Reveal";
 import { Button } from "@/components/ui/Button";
 import { Parallax } from "@/components/motion/Parallax";
 import { Magnetic } from "@/components/motion/Magnetic";
 import { ImageReveal } from "@/components/motion/ImageReveal";
 import { TextReveal } from "@/components/motion/TextReveal";
-import { Counter } from "@/components/motion/Counter";
 import { StaggerChildren, StaggerItem } from "@/components/motion/StaggerChildren";
 import { Testimonials } from "@/components/sections/Testimonials";
+import { BackgroundPaths } from "@/components/ui/background-paths";
 
 export const metadata: Metadata = {
   title: "About Us",
@@ -119,56 +117,34 @@ export default function AboutPage() {
   return (
     <>
       {/* ────────────────────────── HERO ────────────────────────── */}
-      <section className="relative overflow-hidden pt-32 md:pt-40 pb-16 md:pb-24 border-b border-cream/10">
-        {/* Parallax glow */}
-        <Parallax distance={30} className="absolute inset-0 -z-10 pointer-events-none">
-          <div className="absolute right-[-15%] top-[10%] h-[60vh] w-[60vh] rounded-full bg-accent/15 blur-[150px]" />
-          <div className="absolute left-[-10%] bottom-[-20%] h-[40vh] w-[40vh] rounded-full bg-accent/10 blur-[120px]" />
-        </Parallax>
-
-        <div className="container-x relative">
-          {/* Eyebrow */}
-          <Reveal variant="up" delay={0}>
-            <div className="flex items-center gap-3 mb-10">
+      <section className="relative overflow-hidden border-b border-cream/10">
+        <BackgroundPaths
+          compact
+          eyebrow={
+            <div className="flex items-center justify-center gap-3">
               <span className="h-px w-10 bg-accent" />
               <span className="font-mono text-xs uppercase tracking-[0.25em] text-accent">
                 [About / 01]
               </span>
             </div>
-          </Reveal>
-
-          {/* Headline */}
-          <h1 className="font-display text-[44px] sm:text-[64px] md:text-[88px] lg:text-[120px] font-bold leading-[0.92] tracking-[-0.04em] text-balance text-cream max-w-[1400px]">
-            <TextReveal
-              as="span"
-              text="We're the team that"
-              splitBy="word"
-              staggerDelay={80}
-            />
-            <br />
-            <TextReveal
-              as="span"
-              text="makes growth"
-              splitBy="word"
-              staggerDelay={80}
-              delay={200}
-              className="text-cream/40"
-            />{" "}
-            <span className="inline-block align-middle">
-              <TextReveal
-                as="span"
-                text="real."
-                splitBy="word"
-                staggerDelay={100}
-                delay={300}
-                className="text-accent italic"
-              />
-            </span>
-          </h1>
-
+          }
+          lines={[
+            [
+              { text: "We're" },
+              { text: "the" },
+              { text: "team" },
+              { text: "that" },
+            ],
+            [
+              { text: "makes", className: "text-cream/40" },
+              { text: "growth.", className: "text-cream/40" },
+              { text: "real.", className: "text-accent italic" },
+            ],
+          ]}
+        >
           {/* Description */}
           <Reveal variant="up" delay={400}>
-            <p className="mt-12 text-lg md:text-2xl text-cream/70 leading-relaxed max-w-3xl text-pretty font-display">
+            <p className="mt-12 text-lg md:text-2xl text-cream/70 leading-relaxed max-w-3xl mx-auto text-pretty font-display">
               A Delhi NCR-based growth studio founded in 2014. Specialists in
               SEO, performance media, social, and web. Built for ambitious brands
               who measure success in revenue, not vanity.
@@ -184,12 +160,12 @@ export default function AboutPage() {
             {AGENCY_FACTS.map((s, i) => (
               <StaggerItem
                 key={s.label}
-                className="bg-ink-950 p-6 md:p-10 hover:bg-ink-900 transition-colors group"
+                className="bg-ink-950 p-5 md:p-6 lg:p-8 hover:bg-ink-900 transition-colors group"
               >
                 <div className="font-mono text-[10px] uppercase tracking-[0.25em] text-cream/40 mb-3">
                   [0{i + 1}]
                 </div>
-                <div className="font-display text-4xl md:text-6xl font-bold text-accent leading-none mb-2">
+                <div className="font-display text-[clamp(2.25rem,5vw,4.25rem)] font-bold text-accent leading-none mb-2 whitespace-nowrap tracking-tight">
                   {s.value}
                 </div>
                 <div className="font-mono text-xs uppercase tracking-[0.18em] text-cream/60 mt-3">
@@ -198,7 +174,7 @@ export default function AboutPage() {
               </StaggerItem>
             ))}
           </StaggerChildren>
-        </div>
+        </BackgroundPaths>
       </section>
 
       {/* ────────────────────── STORY ────────────────────── */}

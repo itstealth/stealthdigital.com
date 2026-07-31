@@ -1,8 +1,8 @@
 "use client";
 
-import { TextReveal } from "@/components/motion/TextReveal";
 import { Marquee } from "@/components/motion/Marquee";
 import { BrandLogo } from "@/components/ui/BrandLogo";
+import TextBlockAnimation from "@/components/ui/text-block-animation";
 import { CLIENT_LOGOS } from "@/data/clientLogos";
 
 export function Hero() {
@@ -14,15 +14,19 @@ export function Hero() {
           Your Strategic Partner in Brand Growth
         </span>
         <div className="container-fluid max-w-[1500px]">
-          <TextReveal
-            as="h1"
-            text="Let your brand own the spotlight."
-            splitBy="word"
-            className="font-display text-[10vw] md:text-[8vw] font-bold leading-[0.9] tracking-[-0.04em] text-cream"
-          />
+          <TextBlockAnimation
+            blockColor="#FFD60A"
+            animateOnScroll={false}
+            delay={0.2}
+            duration={0.8}
+          >
+            <h1 className="font-display text-[10vw] md:text-[8vw] font-bold leading-[0.9] tracking-[-0.04em] text-cream">
+              Let your brand own the spotlight.
+            </h1>
+          </TextBlockAnimation>
         </div>
         <p className="mt-8 text-lg text-cream/70 font-sans max-w-2xl">
-          Transforming 100+ Brands to Dominate the Next-Gen Era. 
+          Transforming 100+ Brands to Dominate the Next-Gen Era.
         </p>
       </div>
 

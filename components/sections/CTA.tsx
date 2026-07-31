@@ -8,6 +8,7 @@ import { Reveal } from "@/components/motion/Reveal";
 import { Magnetic } from "@/components/motion/Magnetic";
 
 import { SplitTextHover } from "@/components/motion/SplitTextHover";
+import TextBlockAnimation from "@/components/ui/text-block-animation";
 
 export function CTA() {
   const ref = useRef<HTMLDivElement>(null);
@@ -32,9 +33,11 @@ export function CTA() {
         </Reveal>
 
         <Reveal variant="up" delay={0.1}>
-          <h2 className="font-display text-[56px] sm:text-[80px] md:text-[120px] lg:text-[150px] font-bold leading-[0.9] tracking-[-0.04em] text-balance text-cream max-w-5xl mx-auto">
-            Ready to <span className="text-accent italic">scale?</span>
-          </h2>
+          <TextBlockAnimation blockColor="#FFD60A">
+            <h2 className="font-display text-[56px] sm:text-[80px] md:text-[120px] lg:text-[150px] font-bold leading-[0.9] tracking-[-0.04em] text-cream max-w-5xl mx-auto">
+              Ready to <span className="text-accent italic">scale?</span>
+            </h2>
+          </TextBlockAnimation>
         </Reveal>
 
         <Reveal variant="up" delay={0.25}>

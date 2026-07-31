@@ -5,6 +5,7 @@ import dynamic from "next/dynamic";
 import { motion, AnimatePresence, useInView } from "framer-motion";
 import { Quote, ArrowLeft, ArrowRight } from "lucide-react";
 import { Reveal } from "@/components/motion/Reveal";
+import TextBlockAnimation from "@/components/ui/text-block-animation";
 import { TESTIMONIALS } from "@/data/testimonials";
 
 // SplashCursor is a WebGL fluid effect — only loaded on the client and
@@ -103,9 +104,11 @@ export function Testimonials() {
                 Client Voices
               </span>
             </div>
-            <h2 className="font-display text-[44px] sm:text-[64px] md:text-[88px] font-bold leading-[0.95] tracking-[-0.04em] text-ink-950 text-balance max-w-5xl">
-              What Our Happy Clients Say About Us
-            </h2>
+            <TextBlockAnimation blockColor="#FFD60A">
+              <h2 className="font-display text-[44px] sm:text-[64px] md:text-[88px] font-bold leading-[0.95] tracking-[-0.04em] text-ink-950 max-w-5xl">
+                What Our Happy Clients Say About Us
+              </h2>
+            </TextBlockAnimation>
           </div>
         </Reveal>
 

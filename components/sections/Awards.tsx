@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { Marquee } from "@/components/motion/Marquee";
 import { Reveal } from "@/components/motion/Reveal";
+import TextBlockAnimation from "@/components/ui/text-block-animation";
 
 /**
  * Partners and Recognition
@@ -119,9 +120,11 @@ export function Awards() {
               <span className="h-px w-8 bg-ink-950" />
             </div>
 
-            <h2 className="font-display text-[44px] sm:text-[64px] md:text-[88px] font-bold leading-[0.95] tracking-[-0.04em] text-ink-950 text-balance max-w-5xl">
-              Partners and Recognition
-            </h2>
+            <TextBlockAnimation blockColor="#FFD60A">
+              <h2 className="font-display text-[44px] sm:text-[64px] md:text-[88px] font-bold leading-[0.95] tracking-[-0.04em] text-ink-950 max-w-5xl">
+                Partners and Recognition
+              </h2>
+            </TextBlockAnimation>
 
             <p className="font-serif italic text-lg md:text-xl text-ink-950/60 max-w-2xl text-pretty">
               Officially certified by the platforms we build, advertise, and
