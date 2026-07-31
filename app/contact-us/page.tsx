@@ -8,7 +8,7 @@ import { SITE } from "@/data/site";
 export const metadata: Metadata = {
   title: "Contact Us",
   description:
-    "Tell us about your goals. We'll send back a custom growth plan within 48 hours.",
+    "Tell us about your goals. We'll send back a custom growth plan within 48 hours — no fluff, no sales deck.",
 };
 
 export default function ContactPage() {
@@ -16,8 +16,8 @@ export default function ContactPage() {
     <>
       <PageHero
         eyebrow="Contact"
-        title="Let's grow something great together."
-        description="Tell us about your goals, your team, and your timeline. We'll respond within 24 hours — usually faster."
+        title="Ready to scale?"
+        description="Tell us about your goals. We'll send back a custom growth plan within 48 hours — no fluff, no sales deck."
       />
 
       <section className="py-20 md:py-32 border-b border-cream/10">

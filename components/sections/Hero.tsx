@@ -26,19 +26,23 @@ export function Hero() {
         </p>
       </div>
 
-      {/* Marquee Ticker at the bottom of hero */}
-      <div className="w-full bg-ink-950 pt-16 pb-12 border-t border-cream/10">
+      {/* Marquee Ticker at the bottom of hero — logo wall on a black
+          glass strip. Semi-transparent ink-950 with backdrop blur and
+          hairline border, so it reads as a floating panel over whatever
+          sits behind. */}
+      <div className="w-full bg-ink-950/60 backdrop-blur-md pt-12 pb-10 border-y border-white/10 shadow-2xl">
         <div className="container-fluid flex items-center mb-6">
-          <span className="font-mono text-xs uppercase tracking-[0.2em] text-cream/50">Trusted by ambitious brands</span>
+          <span className="font-mono text-xs uppercase tracking-[0.2em] text-cream/50">
+            Trusted by ambitious brands
+          </span>
         </div>
         <Marquee speed={35}>
           {CLIENT_LOGOS.map((logo, i) => (
             <div
               key={i}
               className="flex shrink-0 items-center px-6 py-2"
-              style={{ color: "rgb(245 240 230 / 0.8)" }}
             >
-              <BrandLogo logo={logo} size={28} />
+              <BrandLogo logo={logo} size={56} />
             </div>
           ))}
         </Marquee>

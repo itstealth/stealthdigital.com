@@ -13,8 +13,9 @@ export type ClientLogo = {
   name: string;
   /** Path to logo image under /public, e.g. "/logos/google.svg". Optional. */
   src?: string;
-  /** Inline SVG mark (rendered to the left of the wordmark). */
-  mark: React.ReactNode;
+  /** Inline SVG mark (rendered to the left of the wordmark). Required when
+   *  no `src` is provided — i.e., for the placeholder logo set. */
+  mark?: React.ReactNode;
   /** Wordmark text styling. */
   wordmarkStyle?: "serif" | "sans" | "display";
   /** Optional accent color for the mark (defaults to currentColor). */
@@ -129,16 +130,15 @@ const Drop = ({ color }: { color?: string }) => (
 );
 
 export const CLIENT_LOGOS: ClientLogo[] = [
-  { name: "GL Bajaj Institute", mark: <Square />, wordmarkStyle: "serif" },
-  { name: "Indo Global Group", mark: <Ring />, wordmarkStyle: "display" },
-  { name: "IMM Delhi", mark: <Bar />, wordmarkStyle: "sans" },
-  { name: "Bloom Beverages", mark: <Spark />, markColor: "#FF6B6B" },
-  { name: "Nua Wellness", mark: <Leaf />, markColor: "#7FD1A8" },
-  { name: "Sukoon Health", mark: <Cross />, markColor: "#9EC8E0" },
-  { name: "The Loom Co.", mark: <Wave />, markColor: "#D4A574" },
-  { name: "Rangoon Retail", mark: <Hex /> },
-  { name: "Aarka Hospitality", mark: <Arc />, markColor: "#C9A961" },
-  { name: "Paperboat Studios", mark: <Triangle /> },
-  { name: "Mitti Naturals", mark: <Drop />, markColor: "#B58050" },
-  { name: "Cycle Coffee", mark: <Dot />, markColor: "#8B5A3C" },
+  { name: "BFIS", src: "/images/BFIS.webp" },
+  { name: "Col Brown", src: "/images/Col_Brown.png" },
+  { name: "DDUMC", src: "/images/DDUMC.jpg" },
+  { name: "GLA", src: "/images/GLA.png" },
+  { name: "GL Bajaj", src: "/images/GLBAJAJ.jpg" },
+  { name: "IG", src: "/images/IG.jpg" },
+  { name: "IMS", src: "/images/IMS.png" },
+  { name: "LBSIM", src: "/images/LBSIM.jpeg" },
+  { name: "PE", src: "/images/PE.jpeg" },
+  { name: "SIA", src: "/images/SIA.jpg" },
+  { name: "TDV", src: "/images/TDV.jpg" },
 ];
