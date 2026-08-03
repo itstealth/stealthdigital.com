@@ -21,7 +21,7 @@ export function CTA() {
   return (
     <section
       ref={ref}
-      className="relative py-32 md:py-48 border-y border-cream/10 overflow-hidden bg-ink-950"
+      className="relative py-24 md:py-32 border-y border-cream/10 overflow-hidden bg-ink-950"
     >
       <div className="container-x relative text-center">
         <Reveal variant="up">

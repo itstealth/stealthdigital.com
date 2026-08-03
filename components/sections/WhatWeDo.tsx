@@ -148,7 +148,7 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
 
 export function WhatWeDo() {
   return (
-    <section className="relative py-24 md:py-40 bg-ink-950 overflow-hidden">
+    <section className="relative py-20 md:py-28 bg-ink-950 overflow-hidden">
       <div className="container-fluid mb-16 md:mb-24 px-4 md:px-8">
         <div className="max-w-4xl">
           <span className="font-mono text-xs uppercase tracking-[0.3em] text-cream/50">

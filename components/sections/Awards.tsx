@@ -101,7 +101,7 @@ function PartnerBadge({
 
 export function Awards() {
   return (
-    <section className="relative py-24 md:py-36 border-t border-ink-950/10 bg-cream overflow-hidden">
+    <section className="relative py-20 md:py-28 border-t border-ink-950/10 bg-cream overflow-hidden">
       {/* Subtle paper grain so the white sections feel like the same paper. */}
       <div className="pointer-events-none absolute inset-0 -z-0">
         <div className="absolute inset-0 bg-grain opacity-[0.05] mix-blend-multiply" />

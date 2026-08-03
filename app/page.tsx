@@ -5,8 +5,6 @@ import { Testimonials } from "@/components/sections/Testimonials";
 import { Awards } from "@/components/sections/Awards";
 import { Process } from "@/components/sections/Process";
 import { About } from "@/components/sections/About";
-import { StatsMarquee } from "@/components/sections/StatsMarquee";
-import { AgencyStats } from "@/components/sections/AgencyStats";
 import { FeaturedWork } from "@/components/sections/FeaturedWork";
 import { CTA } from "@/components/sections/CTA";
 
@@ -20,8 +18,6 @@ export default function HomePage() {
       <Awards />
       <Process />
       <About />
-      <StatsMarquee />
-      <AgencyStats />
       <FeaturedWork />
       <CTA />
     </>

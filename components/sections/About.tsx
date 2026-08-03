@@ -36,7 +36,7 @@ export function About() {
   ];
 
   return (
-    <section className="relative py-24 md:py-40 bg-ink-950">
+    <section className="relative py-20 md:py-28 bg-ink-950">
       <div className="container-fluid">
         <div className="grid gap-12 md:gap-20 md:grid-cols-12">
           {/* Left: headline + body */}

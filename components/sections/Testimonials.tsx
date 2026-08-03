@@ -64,7 +64,7 @@ export function Testimonials() {
   return (
     <section
       ref={sectionRef}
-      className="relative py-24 md:py-40 border-t border-ink-950/10 bg-cream overflow-hidden"
+      className="relative py-20 md:py-28 border-t border-ink-950/10 bg-cream overflow-hidden"
     >
       {/* SplashCursor — full-viewport WebGL fluid cursor. Only mounted
           while the section is in view; pointer-events:none so it never
