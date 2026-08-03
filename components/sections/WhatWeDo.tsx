@@ -156,7 +156,7 @@ export function WhatWeDo() {
           </span>
           <TextBlockAnimation blockColor="#FFD60A">
             <h2 className="mt-6 font-display text-[9vw] font-bold leading-[0.9] tracking-[-0.04em] text-cream md:text-[7vw]">
-              What we do.
+              What we do
             </h2>
           </TextBlockAnimation>
           <p className="mt-8 text-xl md:text-2xl text-cream/50 max-w-2xl font-sans">

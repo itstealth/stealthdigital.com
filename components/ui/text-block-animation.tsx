@@ -11,6 +11,11 @@ if (typeof window !== "undefined") {
   gsap.registerPlugin(SplitText, ScrollTrigger);
 }
 
+// Class on our manual wrappers so we can find and remove them on cleanup.
+// Without this, React throws "removeChild: node is not a child of this node"
+// on unmount because the DOM tree no longer matches React's virtual tree.
+const WRAPPER_CLASS = "tba-line-wrapper";
+
 interface TextBlockAnimationProps {
   children: React.ReactNode;
   /** Animate when the element scrolls into view. Default true. */
@@ -34,7 +39,7 @@ interface TextBlockAnimationProps {
  *
  * Usage:
  *   <TextBlockAnimation blockColor="#FFD60A">
- *     <h2 className="font-display ...">What we do.</h2>
+ *     <h2 className="font-display ...">What we do</h2>
  *   </TextBlockAnimation>
  */
 export default function TextBlockAnimation({
@@ -67,6 +72,7 @@ export default function TextBlockAnimation({
       // inject an absolutely-positioned revealer block on top of it.
       lines.forEach((line) => {
         const wrapper = document.createElement("div");
+        wrapper.className = WRAPPER_CLASS;
         wrapper.style.position = "relative";
         wrapper.style.display = "block";
         wrapper.style.overflow = "hidden";
@@ -131,7 +137,21 @@ export default function TextBlockAnimation({
         );
 
       return () => {
-        // SplitText.revert() unwraps the line divs and restores the DOM.
+        // CRITICAL: Restore the DOM to what React expects BEFORE
+        // SplitText reverts. Otherwise React throws "removeChild: node
+        // is not a child of this node" on unmount because the manual
+        // wrappers we inserted are still in the DOM tree.
+        root.querySelectorAll(`.${WRAPPER_CLASS}`).forEach((wrapper) => {
+          const parent = wrapper.parentNode;
+          if (!parent) return;
+          // Move the SplitText line wrapper back to its original slot,
+          // then remove our wrapper. The block (last child) is discarded.
+          while (wrapper.firstChild) {
+            parent.insertBefore(wrapper.firstChild, wrapper);
+          }
+          parent.removeChild(wrapper);
+        });
+        // Now safe to revert SplitText — it unwraps the line divs.
         split.revert();
       };
     },

@@ -47,7 +47,7 @@ export function About() {
             </div>
             <TextBlockAnimation blockColor="#FFD60A">
               <h2 className="font-display text-[9vw] md:text-[6vw] font-bold leading-[0.95] tracking-[-0.04em] text-cream">
-                Better Growth Starts With the Right Partner.
+                Better Growth Starts With the Right Partner
               </h2>
             </TextBlockAnimation>
             <p className="mt-8 text-lg md:text-xl text-cream/70 leading-relaxed max-w-2xl font-sans">

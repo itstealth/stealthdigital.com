@@ -21,7 +21,7 @@ export function Hero() {
             duration={0.8}
           >
             <h1 className="font-display text-[10vw] md:text-[8vw] font-bold leading-[0.9] tracking-[-0.04em] text-cream">
-              Let your brand own the spotlight.
+              Let your brand own the spotlight
             </h1>
           </TextBlockAnimation>
         </div>

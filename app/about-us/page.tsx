@@ -10,6 +10,7 @@ import { TextReveal } from "@/components/motion/TextReveal";
 import { StaggerChildren, StaggerItem } from "@/components/motion/StaggerChildren";
 import { Testimonials } from "@/components/sections/Testimonials";
 import { BackgroundPaths } from "@/components/ui/background-paths";
+import { Timeline } from "@/components/ui/timeline";
 
 export const metadata: Metadata = {
   title: "About Us",
@@ -22,21 +23,45 @@ const TIMELINE = [
     year: "2014",
     title: "The first office",
     body: "Two marketers, one rented desk in Sector 62, Noida. First SEO client: a local institute. Six months later they were ranking #1 for their highest-intent keywords.",
+    points: [
+      "Founded in Sector 62, Noida — one desk, two marketers",
+      "First SEO client: a local coaching institute",
+      "Ranked #1 for highest-intent keywords in 6 months",
+      "Built our first playbook — it's still in use today",
+    ],
   },
   {
     year: "2017",
     title: "Paid media joins the mix",
     body: "Added Google Ads and Meta Ads management. Hired our first performance specialist. Revenue tripled in 18 months.",
+    points: [
+      "Launched Google Ads & Meta Ads practices",
+      "First performance specialist joined the team",
+      "Revenue tripled in 18 months",
+      "Built our first paid-media reporting dashboard",
+    ],
   },
   {
     year: "2020",
     title: "Full-stack studio",
     body: "Landed our first 50-person client engagement. Brought design, content, and web in-house. Crossed ₹5Cr annual revenue.",
+    points: [
+      "Landed our first 50-person client engagement",
+      "Brought design, content, and web fully in-house",
+      "Crossed ₹5Cr annual revenue",
+      "Hired the founding leadership team that's still with us",
+    ],
   },
   {
     year: "2024",
     title: "200+ brands · 40 specialists",
     body: "Now serving brands across India, the Middle East, and Southeast Asia. Fully remote-capable. Still founder-led.",
+    points: [
+      "200+ brands served across India, MENA, and SEA",
+      "40+ specialists across 6 cities, fully remote-capable",
+      "₹100Cr+ in ad spend managed across the team",
+      "Still founder-led, still independent, still hiring",
+    ],
   },
 ];
 
@@ -253,33 +278,32 @@ export default function AboutPage() {
             </div>
           </Reveal>
 
-          <StaggerChildren
-            className="border-t border-cream/10"
-            delay={120}
-          >
-            {TIMELINE.map((t, i) => (
-              <StaggerItem
-                key={t.year}
-                className="border-b border-cream/10"
-              >
-                <div className="group grid gap-6 py-10 md:py-14 md:grid-cols-12 md:items-center hover:bg-ink-950/50 transition-colors px-4 md:px-8 -mx-4 md:-mx-8">
-                  <div className="md:col-span-2">
-                    <div className="font-display text-5xl md:text-7xl font-bold text-accent leading-none">
-                      {t.year}
-                    </div>
-                  </div>
-                  <div className="md:col-span-4">
-                    <h3 className="font-display text-2xl md:text-3xl font-bold tracking-tight text-cream">
-                      {t.title}
-                    </h3>
-                  </div>
-                  <div className="md:col-span-6 text-cream/70 leading-relaxed text-base md:text-lg">
+          <Timeline
+            data={TIMELINE.map((t) => ({
+              title: t.year,
+              content: (
+                <div>
+                  <h3 className="font-display text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight text-cream mb-4">
+                    {t.title}
+                  </h3>
+                  <p className="text-cream/70 text-base md:text-lg leading-relaxed mb-6">
                     {t.body}
-                  </div>
+                  </p>
+                  <ul className="space-y-3 border-l border-cream/15 pl-5">
+                    {t.points.map((p, i) => (
+                      <li
+                        key={i}
+                        className="flex gap-3 text-cream/80 text-sm md:text-base leading-relaxed"
+                      >
+                        <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
+                        <span>{p}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-              </StaggerItem>
-            ))}
-          </StaggerChildren>
+              ),
+            }))}
+          />
         </div>
       </section>
 

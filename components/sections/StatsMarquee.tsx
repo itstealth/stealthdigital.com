@@ -14,7 +14,7 @@ export function StatsMarquee() {
           <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
             <TextBlockAnimation blockColor="#FFD60A">
               <h2 className="font-display text-[8vw] md:text-[6vw] font-bold leading-[0.9] tracking-[-0.04em] text-cream">
-                By The Numbers.
+                By The Numbers
               </h2>
             </TextBlockAnimation>
             <p className="text-cream/50 max-w-sm md:text-right font-sans text-lg mb-2">

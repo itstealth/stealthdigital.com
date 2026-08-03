@@ -348,7 +348,7 @@ export function CinematicFooter() {
           {/* 2. Main Center Content — sized so heading, subheading, social
               pills, and secondary links stay in the SAME visual position
               across md → 2xl. (Mobile uses MobileFooter instead.) */}
-          <div className="relative z-10 flex flex-1 flex-col items-center justify-start px-6 pt-[10vh] w-full max-w-3xl mx-auto">
+          <div className="relative z-10 flex flex-1 flex-col items-center justify-start px-6 pt-[10vh] w-full max-w-5xl mx-auto">
             <h2
               ref={headingRef}
               className="text-8xl font-black footer-text-glow tracking-tighter text-center text-white"
@@ -416,7 +416,7 @@ export function CinematicFooter() {
               {/* Secondary Text Links — Company + Legal in one row,
                   always 7 across from md up. Smaller padding so all 7 fit
                   at the 768px md breakpoint. */}
-              <div className="flex flex-nowrap justify-center gap-2 md:gap-3 w-full mt-2 overflow-x-auto">
+              <div className="flex flex-wrap justify-center gap-2 md:gap-3 w-full mt-2">
                 <MagneticButton as="a" href="/about-us" className="footer-glass-pill px-4 md:px-5 py-2 md:py-3 rounded-full text-white/60 font-medium text-xs md:text-sm hover:text-white whitespace-nowrap shrink-0">
                   About
                 </MagneticButton>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useLayoutEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -12,13 +12,24 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
  *   Stage 1 (0 → 20%):  Video holds as a centered rounded card (~80vw).
  *   Stage 2 (20 → 80%): Video scales to 2.5x → fills the screen.
  *   Stage 3 (80 → 100%): Video scales to 1x, settles inline in heading.
+ *
+ * NOTE on cleanup: GSAP's `pin: true` wraps the section in a pin spacer
+ * outside the React tree. When the component unmounts during page
+ * navigation, React tries to remove the section from its original
+ * parent (`<main>`) but GSAP still has it inside the pin spacer,
+ * causing "removeChild: node is not a child of this node". We fix this
+ * by using `useLayoutEffect` (sync cleanup) and killing all
+ * ScrollTriggers + reverting the context BEFORE React commits the
+ * unmount.
  */
 export function ShowreelScroll() {
   const sectionRef = useRef<HTMLElement>(null);
   const videoBoxRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
 
-  useEffect(() => {
+  // useLayoutEffect runs cleanup synchronously BEFORE React commits
+  // unmount, which is essential when GSAP has re-parented the section.
+  useLayoutEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
 
     // Sync with Lenis smooth scroll
@@ -78,6 +89,10 @@ export function ShowreelScroll() {
     }, sectionRef);
 
     return () => {
+      // Kill ALL ScrollTriggers synchronously. This unwraps the pin
+      // spacer and restores the section to its original parent BEFORE
+      // React's unmount commit phase.
+      ScrollTrigger.getAll().forEach((st) => st.kill(true));
       if (lenis?.off) lenis.off("scroll", onLenisScroll);
       ctx.revert();
     };
@@ -111,7 +126,7 @@ export function ShowreelScroll() {
             </div>
           </span>
 
-          <span className="shrink-0">Do.</span>
+          <span className="shrink-0">Do</span>
         </h2>
       </div>
     </section>

@@ -17,7 +17,7 @@ export function FeaturedWork() {
           <div className="flex flex-col gap-6 mb-16 md:mb-24 md:flex-row md:items-end md:justify-between px-4 md:px-8">
             <TextBlockAnimation blockColor="#FFD60A">
               <h2 className="font-display text-[11vw] font-bold leading-[0.9] tracking-[-0.04em] text-cream">
-                Work.
+                Work
               </h2>
             </TextBlockAnimation>
             <p className="text-cream/50 max-w-sm md:text-right font-sans text-lg mb-2">
