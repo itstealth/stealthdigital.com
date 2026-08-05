@@ -1,14 +1,12 @@
 import type { Metadata } from "next";
-import Image from "next/image";
-import Link from "next/link";
 import { Reveal, type FadeDelay } from "@/components/motion/Reveal";
 import { Button } from "@/components/ui/Button";
 import { Parallax } from "@/components/motion/Parallax";
-import { Magnetic } from "@/components/motion/Magnetic";
 import { ImageReveal } from "@/components/motion/ImageReveal";
 import { TextReveal } from "@/components/motion/TextReveal";
 import { StaggerChildren, StaggerItem } from "@/components/motion/StaggerChildren";
 import { Testimonials } from "@/components/sections/Testimonials";
+import { TeamGallery, type TeamMember } from "@/components/sections/TeamGallery";
 import { BackgroundPaths } from "@/components/ui/background-paths";
 import { Timeline } from "@/components/ui/timeline";
 
@@ -104,7 +102,7 @@ const VALUES = [
   },
 ];
 
-const TEAM = [
+const TEAM: TeamMember[] = [
   {
     name: "Rachit Agarwal",
     role: "Founder & CEO",
@@ -128,6 +126,30 @@ const TEAM = [
     role: "Creative Director",
     bio: "Ex-editorial designer. Believes good design is invisible — until it's not.",
     img: "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=800&q=80",
+  },
+  {
+    name: "Kabir Mehta",
+    role: "Head of Paid Media",
+    bio: "Spent 6 years at Meta. Knows every audience-signal trick in the book.",
+    img: "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&w=800&q=80",
+  },
+  {
+    name: "Priya Nair",
+    role: "Head of Content",
+    bio: "Ex-editor at a top business publication. Writes briefs editors actually want.",
+    img: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=800&q=80",
+  },
+  {
+    name: "Arjun Bhatt",
+    role: "Head of Design",
+    bio: "Brand systems for D2C and SaaS. Believes a grid solves most problems.",
+    img: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=800&q=80",
+  },
+  {
+    name: "Saanvi Rao",
+    role: "Head of Web",
+    bio: "Full-stack. Builds the dashboards the rest of us stare at.",
+    img: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=800&q=80",
   },
 ];
 
@@ -387,74 +409,7 @@ export default function AboutPage() {
       </section>
 
       {/* ────────────────────── TEAM ────────────────────── */}
-      <section className="py-24 md:py-40 border-b border-cream/10 bg-ink-900">
-        <div className="container-x">
-          <Reveal variant="up" delay={0}>
-            <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-16 md:mb-24">
-              <div>
-                <div className="font-mono text-[11px] uppercase tracking-[0.2em] text-accent mb-3">
-                  [06 / Leadership]
-                </div>
-                <TextReveal
-                  as="h2"
-                  text="The team."
-                  splitBy="word"
-                  staggerDelay={100}
-                  className="font-display text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight text-cream leading-[1]"
-                />
-              </div>
-              <p className="text-cream/70 max-w-md md:text-right">
-                Strategists, engineers, designers, and analysts who've shipped
-                500+ projects — and lost count of the late nights.
-              </p>
-            </div>
-          </Reveal>
-
-          <StaggerChildren
-            className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4"
-            delay={120}
-          >
-            {TEAM.map((m) => (
-              <StaggerItem key={m.name} className="group">
-                <Magnetic strength={25} innerTarget innerStrength={15} as="div">
-                  <Link
-                    href="/contact-us"
-                    className="block relative overflow-hidden rounded-sm bg-ink-800"
-                  >
-                    <div className="relative aspect-[3/4] overflow-hidden">
-                      <Parallax distance={20}>
-                        <Image
-                          src={m.img}
-                          alt={m.name}
-                          fill
-                          sizes="(min-width: 1024px) 25vw, 50vw"
-                          className="object-cover transition-transform duration-700 group-hover:scale-110"
-                        />
-                      </Parallax>
-                      <div className="absolute inset-0 bg-gradient-to-t from-ink-950 via-ink-950/30 to-transparent" />
-
-                      {/* Bottom content reveals on hover */}
-                      <div className="absolute inset-x-0 bottom-0 p-5 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
-                        <p className="text-xs text-cream/80 leading-snug bg-ink-950/80 backdrop-blur p-3 rounded border border-cream/10">
-                          {m.bio}
-                        </p>
-                      </div>
-                    </div>
-                    <div className="p-5">
-                      <h3 className="font-display text-xl font-bold text-cream tracking-tight">
-                        {m.name}
-                      </h3>
-                      <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-cream/50 mt-1">
-                        {m.role}
-                      </p>
-                    </div>
-                  </Link>
-                </Magnetic>
-              </StaggerItem>
-            ))}
-          </StaggerChildren>
-        </div>
-      </section>
+      <TeamGallery team={TEAM} />
 
       <Testimonials />
 

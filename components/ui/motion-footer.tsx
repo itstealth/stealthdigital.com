@@ -157,10 +157,14 @@ const STYLES = `
 // -------------------------------------------------------------------------
 // 2. MAGNETIC BUTTON PRIMITIVE (Zero Dependency)
 // -------------------------------------------------------------------------
-export type MagneticButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> &
-  React.AnchorHTMLAttributes<HTMLAnchorElement> & {
-    as?: React.ElementType;
-  };
+export type MagneticButtonProps = Omit<
+  React.ButtonHTMLAttributes<HTMLButtonElement> &
+    React.AnchorHTMLAttributes<HTMLAnchorElement>,
+  "children"
+> & {
+  as?: React.ElementType;
+  children?: React.ReactNode;
+};
 
 const MagneticButton = React.forwardRef<HTMLElement, MagneticButtonProps>(
   ({ className, children, as: Component = "button", ...props }, forwardedRef) => {
@@ -214,18 +218,18 @@ const MagneticButton = React.forwardRef<HTMLElement, MagneticButtonProps>(
       return () => ctx.revert();
     }, []);
 
-    return (
-      <Component
-        ref={(node: HTMLElement) => {
+    return React.createElement(
+      Component as React.ElementType,
+      {
+        ref: (node: HTMLElement) => {
           (localRef as any).current = node;
           if (typeof forwardedRef === "function") forwardedRef(node);
           else if (forwardedRef) (forwardedRef as any).current = node;
-        }}
-        className={cn("cursor-pointer", className)}
-        {...props}
-      >
-        {children}
-      </Component>
+        },
+        className: cn("cursor-pointer", className),
+        ...props,
+      },
+      children
     );
   }
 );
