@@ -78,7 +78,7 @@ interface PlaneData {
     y: number; // Added y property for vertical positioning
 }
 
-const DEFAULT_DEPTH_RANGE = 100;
+const DEFAULT_DEPTH_RANGE = 50;
 const MAX_HORIZONTAL_OFFSET = 8;
 const MAX_VERTICAL_OFFSET = 8;
 /**
@@ -234,7 +234,7 @@ function ImagePlane({
                     distanceFactor={6}
                     occlude
                     style={{ pointerEvents: 'none' }}
-                    position={[0, -1.6, 0.01]}
+                    position={[0, -0.7, 0.01]}
                 >
                     <div
                         ref={labelRef}
@@ -482,12 +482,9 @@ function GalleryScene({
     }, [reducedMotion, isInView]);
 
     useFrame((state, delta) => {
-        // Apply auto-play (skipped under reduced-motion). Increment is scaled
-        // with depth range so a full rotation always takes a similar amount
-        // of time regardless of how the gallery is configured.
+        // Apply auto-play (skipped under reduced-motion)
         if (autoPlayRef.current && !reducedMotion) {
-            const autoPlayIncrement = 0.6 * (depthRange / 100);
-            scrollVelocityRef.current += autoPlayIncrement * delta;
+            scrollVelocityRef.current += 0.3 * delta;
         }
 
         // Damping
@@ -603,18 +600,6 @@ function GalleryScene({
 
             // Clamp blur to reasonable values
             blur = Math.max(0, Math.min(blurSettings.maxBlur, blur));
-
-            // Center vanish zone: planes approaching the centre (where the
-            // overlay text sits) blur up and fade out so the text stays
-            // legible. Radius is ±15% of the depth range around the centre.
-            const CENTER_VANISH_RADIUS = 0.15;
-            const centerDistance = Math.abs(normalizedPosition - 0.5);
-            if (centerDistance < CENTER_VANISH_RADIUS) {
-                const proximity = 1 - centerDistance / CENTER_VANISH_RADIUS;
-                const vanishStrength = proximity * proximity;
-                opacity *= 1 - vanishStrength;
-                blur = Math.max(blur, blurSettings.maxBlur * vanishStrength);
-            }
 
             // Imperative writes: group position, shader uniforms, label opacity.
             const group = groupRefs.current[i];
