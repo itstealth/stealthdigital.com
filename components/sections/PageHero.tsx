@@ -2,6 +2,8 @@
 
 import { motion } from "framer-motion";
 import { TextReveal } from "@/components/motion/TextReveal";
+import { Reveal } from "@/components/motion/Reveal";
+import { cn } from "@/lib/utils";
 import type { ReactNode } from "react";
 
 interface PageHeroProps {
@@ -15,6 +17,13 @@ interface PageHeroProps {
    * style its own width/height via className on the element you pass in.
    */
   aside?: ReactNode;
+  /**
+   * When true, the title renders smaller and on a single line
+   * (`whitespace-nowrap`). Use for short titles like "Ready to scale?"
+   * that should feel like a confident headline rather than wrapping
+   * over multiple lines on tablet widths.
+   */
+  compact?: boolean;
 }
 
 /**
@@ -23,7 +32,12 @@ interface PageHeroProps {
  * on the right at lg+ so pages can decorate the heading with media
  * without breaking the editorial layout.
  */
-export function PageHero({ eyebrow, title, description, aside }: PageHeroProps) {
+export function PageHero({ eyebrow, title, description, aside, compact = false }: PageHeroProps) {
+    // Short titles get a single-block render with `whitespace-nowrap` so
+    // they're guaranteed on one line. Long titles fall back to the
+    // word-split TextReveal so they can wrap naturally over multiple
+    // lines without overflowing the container.
+    const useCompactSingleLine = compact && title.length <= 25;
   return (
     <section className="relative overflow-hidden pt-32 md:pt-40 pb-16 md:pb-24 border-b border-cream/10">
       <div className="absolute inset-0 -z-10">
@@ -50,12 +64,28 @@ export function PageHero({ eyebrow, title, description, aside }: PageHeroProps) 
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
           <div className="lg:col-span-8">
-            <TextReveal
-              as="h1"
-              text={title}
-              splitBy="word"
-              className="font-display text-[44px] sm:text-[64px] md:text-[88px] lg:text-[112px] font-bold leading-[0.95] tracking-[-0.04em] text-balance text-cream max-w-5xl"
-            />
+            {useCompactSingleLine ? (
+              // Short title in compact mode: single block + whitespace-nowrap
+              // so it really stays on one line (TextReveal splits into
+              // per-word inline-blocks which can wrap independently).
+              <Reveal variant="up" delay={80} as="h1">
+                <span className="font-display font-bold tracking-[-0.04em] text-cream whitespace-nowrap block text-[36px] sm:text-[44px] md:text-[56px] lg:text-[64px]">
+                  {title}
+                </span>
+              </Reveal>
+            ) : (
+              <TextReveal
+                as="h1"
+                text={title}
+                splitBy="word"
+                className={cn(
+                  "font-display font-bold tracking-[-0.04em] text-balance text-cream max-w-5xl",
+                  compact
+                    ? "text-[36px] sm:text-[48px] md:text-[60px] lg:text-[72px] leading-[1.05]"
+                    : "text-[44px] sm:text-[64px] md:text-[88px] lg:text-[112px] leading-[0.95]"
+                )}
+              />
+            )}
 
             {description && (
               <motion.p

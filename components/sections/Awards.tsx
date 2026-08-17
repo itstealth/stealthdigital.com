@@ -43,15 +43,13 @@ const PARTNERS: Partner[] = [
   { src: "/images/Google_Analytics.png", alt: "Google Analytics" },
   { src: "/images/meta%20partner.jpg", alt: "Meta Partner", imgFit: "tight" },
   {
-    src: "/images/shopify-partners.png",
+    src: "/images/SP.jpg",
     alt: "Shopify Partners",
     imgFit: "tight",
-    blend: "multiply",
   },
   {
-    src: "/images/Google%20partner.webp",
+    src: "/images/gP.png",
     alt: "Google Partner",
-    blend: "darken",
   },
   { src: "/images/tiktok.webp", alt: "TikTok" },
   { src: "/images/snapchat.png", alt: "Snapchat", imgFit: "tight", objectFit: "cover" },

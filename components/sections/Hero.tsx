@@ -10,7 +10,7 @@ export function Hero() {
     <section className="relative min-h-screen bg-ink-950 flex flex-col">
       {/* Centered headline */}
       <div className="flex-1 flex flex-col items-center justify-center px-4 pt-32 pb-16 text-center">
-        <span className="font-mono text-xs uppercase tracking-[0.3em] text-accent mb-6">
+        <span className="font-mono text-sm md:text-base uppercase tracking-[0.3em] text-accent mb-6">
           Your Strategic Partner in Brand Growth
         </span>
         <div className="container-fluid max-w-[1500px]">

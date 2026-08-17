@@ -191,6 +191,56 @@ export const SERVICES: Service[] = [
     ],
   },
   {
+    slug: "video-production",
+    title: "Video Production",
+    shortTitle: "Video",
+    tagline: "Captivating video content that tells your brand story.",
+    description:
+      "From short-form social videos to corporate presentations, we create high-quality, professional videos that capture attention, communicate your brand story, and inspire action. Every frame serves a purpose and drives results.",
+    features: [
+      "Corporate & brand videos",
+      "Social media short-form content",
+      "Explainer & product videos",
+      "Animation & motion graphics",
+      "Event & testimonial videos",
+      "Editing & post-production",
+    ],
+    image:
+      "https://images.unsplash.com/photo-1492691527719-9d1d07b534a4?auto=format&fit=crop&w=1600&q=80",
+    subServices: [
+      {
+        title: "Corporate & Brand Videos",
+        description:
+          "Polished videos that communicate your brand's values, mission, and vision — perfect for presentations, websites, and campaigns.",
+      },
+      {
+        title: "Social Media Videos",
+        description:
+          "Engaging short-form content for Instagram Reels, TikTok, LinkedIn, and YouTube Shorts that resonates with your audience and drives engagement.",
+      },
+      {
+        title: "Explainer & Product Videos",
+        description:
+          "Videos that simplify complex products or services, helping potential customers understand your offering quickly and clearly.",
+      },
+      {
+        title: "Animation & Motion Graphics",
+        description:
+          "Custom animations and motion graphics that make your message more dynamic, visually appealing, and memorable.",
+      },
+      {
+        title: "Event & Testimonial Videos",
+        description:
+          "Captured events, customer stories, and testimonials that enhance credibility, social proof, and connection with your audience.",
+      },
+      {
+        title: "Editing & Post-Production",
+        description:
+          "Color grading, sound design, and visual effects — all the polish that turns raw footage into a professional final cut.",
+      },
+    ],
+  },
+  {
     slug: "ui-ux-design",
     title: "UI/UX Design",
     shortTitle: "UI/UX",

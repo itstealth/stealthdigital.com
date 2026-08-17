@@ -64,7 +64,7 @@ export function CTA() {
             </Magnetic>
             <Magnetic strength={20} as="span">
               <Link
-                href="tel:+919910694833"
+                href="tel:+918700781135"
                 className="group inline-flex h-14 items-center gap-2 rounded-full border border-cream/20 px-7 text-sm font-medium uppercase tracking-[0.15em] text-cream transition-colors hover:border-accent hover:text-accent"
               >
                 <SplitTextHover>Call Us Now</SplitTextHover>

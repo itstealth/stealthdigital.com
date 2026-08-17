@@ -28,6 +28,7 @@ export default function ServicesPage() {
         eyebrow="What We Do"
         title="Full-stack growth, four disciplines deep."
         description="We don't do 'marketing'. We do SEO, paid media, social, and web — integrated into a single growth system. Pick one, or all."
+        compact
         aside={
           <InteractiveRobotSpline
             scene={ROBOT_SCENE_URL}

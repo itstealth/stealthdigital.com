@@ -47,8 +47,8 @@ export default function TextBlockAnimation({
   animateOnScroll = true,
   delay = 0,
   blockColor = "#000000",
-  stagger = 0.1,
-  duration = 0.6,
+  stagger = 0.04,
+  duration = 0.35,
   className,
 }: TextBlockAnimationProps) {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -99,7 +99,7 @@ export default function TextBlockAnimation({
       });
 
       const tl = gsap.timeline({
-        defaults: { ease: "expo.inOut" },
+        defaults: { ease: "power2.inOut" },
         scrollTrigger: animateOnScroll
           ? {
               trigger: root,

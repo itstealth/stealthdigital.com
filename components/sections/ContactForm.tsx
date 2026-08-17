@@ -44,11 +44,26 @@ export function ContactForm() {
   const onSubmit = async (data: FormData) => {
     setStatus("sending");
     try {
-      // Formspree endpoint placeholder. Replace with your real endpoint.
+      // FormSubmit.co requires form-encoded data (not JSON) so that
+      // _subject, _honey, and other special fields are recognised.
+      const body = new URLSearchParams({
+        name: data.name,
+        email: data.email,
+        company: data.company,
+        phone: data.phone,
+        service: data.service,
+        budget: data.budget ?? "",
+        message: data.message,
+        _subject: "New Lead — /contact-us page",
+      });
+
       const res = await fetch(SITE.formspreeEndpoint, {
         method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify(data),
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          Accept: "application/json",
+        },
+        body: body.toString(),
       });
       if (res.ok) {
         setStatus("success");
@@ -90,6 +105,15 @@ export function ContactForm() {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+      {/* FormSubmit subject tag + honeypot spam trap. */}
+      <input type="hidden" name="_subject" value="New Lead — /contact-us page" />
+      <input
+        type="text"
+        name="_honey"
+        style={{ display: "none" }}
+        tabIndex={-1}
+        autoComplete="off"
+      />
       <div className="grid gap-6 sm:grid-cols-2">
         <Field label="Name" error={errors.name?.message}>
           <input
@@ -117,7 +141,7 @@ export function ContactForm() {
           <input
             {...register("phone")}
             type="tel"
-            placeholder="+91 99106 94833"
+            placeholder="+91 8700781135"
             className="form-input"
           />
         </Field>

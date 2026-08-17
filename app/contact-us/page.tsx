@@ -18,6 +18,7 @@ export default function ContactPage() {
         eyebrow="Contact"
         title="Ready to scale?"
         description="Tell us about your goals. We'll send back a custom growth plan within 48 hours — no fluff, no sales deck."
+        compact
       />
 
       <section className="py-20 md:py-32 border-b border-cream/10">

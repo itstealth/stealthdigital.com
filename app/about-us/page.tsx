@@ -6,7 +6,7 @@ import { ImageReveal } from "@/components/motion/ImageReveal";
 import { TextReveal } from "@/components/motion/TextReveal";
 import { StaggerChildren, StaggerItem } from "@/components/motion/StaggerChildren";
 import { Testimonials } from "@/components/sections/Testimonials";
-import { TeamGallery, type TeamMember } from "@/components/sections/TeamGallery";
+import { TeamMarquee, type TeamMember } from "@/components/sections/TeamMarquee";
 import { BackgroundPaths } from "@/components/ui/background-paths";
 import { Timeline } from "@/components/ui/timeline";
 
@@ -409,7 +409,7 @@ export default function AboutPage() {
       </section>
 
       {/* ────────────────────── TEAM ────────────────────── */}
-      <TeamGallery team={TEAM} />
+      <TeamMarquee team={TEAM} />
 
       <Testimonials />
 

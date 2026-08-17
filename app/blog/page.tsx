@@ -29,6 +29,7 @@ export default async function BlogPage() {
         eyebrow="The Stealth Blog"
         title="Ideas, playbooks & growth notes."
         description="Real tactics from real client work. No fluff, no guru-speak. Just what's working in SEO, paid media, social, and web."
+        compact
       />
 
       {/* Featured post */}

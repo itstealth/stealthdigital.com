@@ -33,4 +33,5 @@ export const MAIN_NAV: NavItem[] = [
   { label: "Work", href: "/#work" },
   { label: "About", href: "/about-us" },
   { label: "Blog", href: "/blog" },
+  { label: "Contact", href: "/contact-us" },
 ];

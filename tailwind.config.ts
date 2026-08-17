@@ -6,6 +6,10 @@ const config: Config = {
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./content/**/*.{md,mdx}",
   ],
+  // `animate-marquee-vertical` is referenced via inline `style={{ animation: ... }}`
+  // in the Marquee component, which Tailwind's JIT can't see. Safelist it so
+  // the keyframe + utility class make it into the bundle.
+  safelist: ["animate-marquee-vertical", "animate-marquee-vertical-slow"],
   theme: {
     extend: {
       colors: {
@@ -81,6 +85,8 @@ const config: Config = {
       animation: {
         marquee: "marquee 40s linear infinite",
         "marquee-slow": "marquee 60s linear infinite",
+        "marquee-vertical": "marquee-vertical 40s linear infinite",
+        "marquee-vertical-slow": "marquee-vertical 60s linear infinite",
         "spin-slow": "spin 20s linear infinite",
         "pulse-soft": "pulse-soft 3s ease-in-out infinite",
         shimmer: "shimmer 8s linear infinite",
@@ -89,6 +95,10 @@ const config: Config = {
         marquee: {
           "0%": { transform: "translateX(0)" },
           "100%": { transform: "translateX(-50%)" },
+        },
+        "marquee-vertical": {
+          "0%": { transform: "translateY(0)" },
+          "100%": { transform: "translateY(-50%)" },
         },
         "pulse-soft": {
           "0%, 100%": { opacity: "0.6" },

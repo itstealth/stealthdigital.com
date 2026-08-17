@@ -10,8 +10,8 @@ interface TextRevealProps {
   as?: "span" | "h1" | "h2" | "h3" | "p" | "div";
   /** Split by "word" or "char" */
   splitBy?: "word" | "char";
-  /** Per-item stagger in ms. Atomic data-stagger values: 60/80/100/120/150/300 */
-  staggerDelay?: 60 | 80 | 100 | 120 | 150 | 300;
+  /** Per-item stagger in ms. Default 35. */
+  staggerDelay?: number;
   /** Initial delay before animation starts */
   delay?: number;
 }
@@ -26,7 +26,7 @@ export function TextReveal({
   className,
   as = "span",
   splitBy = "word",
-  staggerDelay = 80,
+  staggerDelay = 35,
   delay = 0,
 }: TextRevealProps) {
   const ref = useRef<HTMLElement>(null);

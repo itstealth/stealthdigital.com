@@ -5,13 +5,13 @@ export const fadeUp: Variants = {
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] },
+    transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] },
   },
 };
 
 export const fadeIn: Variants = {
   hidden: { opacity: 0 },
-  visible: { opacity: 1, transition: { duration: 0.8, ease: "easeOut" } },
+  visible: { opacity: 1, transition: { duration: 0.4, ease: "easeOut" } },
 };
 
 export const stagger = (delay = 0.08): Variants => ({
@@ -19,7 +19,7 @@ export const stagger = (delay = 0.08): Variants => ({
   visible: {
     transition: {
       staggerChildren: delay,
-      delayChildren: 0.1,
+      delayChildren: 0.05,
     },
   },
 });
@@ -28,7 +28,7 @@ export const textReveal: Variants = {
   hidden: { y: "110%" },
   visible: {
     y: "0%",
-    transition: { duration: 0.85, ease: [0.65, 0, 0.35, 1] },
+    transition: { duration: 0.4, ease: [0.65, 0, 0.35, 1] },
   },
 };
 
@@ -36,7 +36,7 @@ export const lineGrow: Variants = {
   hidden: { scaleX: 0 },
   visible: {
     scaleX: 1,
-    transition: { duration: 1.2, ease: [0.22, 1, 0.36, 1] },
+    transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] },
   },
 };
 
@@ -45,6 +45,6 @@ export const cardRise: Variants = {
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] },
+    transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] },
   },
 };

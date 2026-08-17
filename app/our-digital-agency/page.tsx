@@ -224,7 +224,7 @@ const DEPARTMENTS: Department[] = [
 ];
 
 const OFFICES = [
-  { city: "Noida (HQ)", address: "C-23, Sector 62\nNoida, Delhi NCR" },
+  { city: "Delhi (HQ)", address: "87/88 Block - C, Ramesh Nagar\nDelhi, India 110015" },
   { city: "Mumbai", address: "WeWork BKC\nBandra Kurla Complex" },
   { city: "Bengaluru", address: "91springboard\nKoramangala" },
   { city: "Dubai", address: "DMCC Free Zone\nJumeirah Lakes Towers" },

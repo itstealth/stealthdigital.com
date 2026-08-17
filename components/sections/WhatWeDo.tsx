@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowUpRight, Search, Target, Share2, Code, Sparkles, PenTool, type LucideIcon } from "lucide-react";
+import { ArrowUpRight, Search, Target, Share2, Code, Sparkles, PenTool, Video, type LucideIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { Marquee } from "@/components/motion/Marquee";
@@ -40,6 +40,7 @@ const ICON_MAP: Record<string, LucideIcon> = {
   "social-media-marketing": Share2,
   "website-design-development": Code,
   "ui-ux-design": PenTool,
+  "video-production": Video,
 };
 
 // Card-specific cover images. Only the Web Development card has a front-cover

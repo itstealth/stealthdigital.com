@@ -18,6 +18,14 @@ interface MarqueeProps {
    * the CSS animation path with zero behavior change.
    */
   draggable?: boolean;
+  /**
+   * When true, scrolls vertically instead of horizontally. Uses the
+   * `marquee-vertical` keyframe and a top/bottom mask-image fade.
+   * Draggable path is horizontal-only for now.
+   */
+  vertical?: boolean;
+  /** Inline style merged onto the animated track (e.g. `animationDelay`). */
+  style?: React.CSSProperties;
 }
 
 /**
@@ -47,22 +55,31 @@ function CssMarquee({
   speed = 40,
   reverse = false,
   pauseOnHover = true,
+  vertical = false,
+  style,
 }: Omit<MarqueeProps, "draggable">) {
   return (
     <div
       className={cn(
-        "group flex w-full overflow-hidden [--gap:1rem] [mask-image:linear-gradient(to_right,transparent,black_5%,black_95%,transparent)]",
+        "group flex overflow-hidden [--gap:1rem]",
+        vertical
+          ? "h-full flex-col [mask-image:linear-gradient(to_bottom,transparent,black_5%,black_95%,transparent)]"
+          : "w-full [mask-image:linear-gradient(to_right,transparent,black_5%,black_95%,transparent)]",
         className
       )}
     >
       <div
         className={cn(
-          "flex shrink-0 items-center gap-[--gap] pr-[--gap]",
+          "flex shrink-0 gap-[--gap]",
+          vertical
+            ? "flex-col items-center pb-[--gap]"
+            : "items-center pr-[--gap]",
           pauseOnHover && "group-hover:[animation-play-state:paused]"
         )}
         style={{
-          animation: `marquee ${speed}s linear infinite`,
+          animation: `${vertical ? "marquee-vertical" : "marquee"} ${speed}s linear infinite`,
           animationDirection: reverse ? "reverse" : "normal",
+          ...style,
         }}
       >
         {children}

@@ -7,6 +7,7 @@ import { Process } from "@/components/sections/Process";
 import { About } from "@/components/sections/About";
 import { FeaturedWork } from "@/components/sections/FeaturedWork";
 import { CTA } from "@/components/sections/CTA";
+import { LeadCapturePopup } from "@/components/ui/LeadCapturePopup";
 
 export default function HomePage() {
   return (
@@ -20,6 +21,7 @@ export default function HomePage() {
       <About />
       <FeaturedWork />
       <CTA />
+      <LeadCapturePopup />
     </>
   );
 }
