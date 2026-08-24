@@ -5,6 +5,19 @@
 @layer base {
   :root {
     --grain-opacity: 0.04;
+
+    /* Theme palette — white (light) theme. RGB triplets so Tailwind's
+       `rgb(var(--x) / <alpha-value>)` opacity modifiers work. The `dark`
+       class (below) overrides these to restore the original black look. */
+    --ink-950: 255 255 255; /* page background */
+    --ink-900: 242 242 242; /* raised surfaces / hover states */
+    --ink-800: 230 230 230;
+    --ink-700: 217 217 217;
+    --ink-600: 204 204 204;
+    --cream: 0 0 0; /* primary text */
+    --cream-dim: 26 26 26;
+    --cream-mute: 85 85 85;
+
     --background: oklch(1 0 0);
     --foreground: oklch(0.145 0 0);
     --card: oklch(1 0 0);
@@ -118,6 +131,16 @@
     --sidebar-accent-foreground: oklch(0.985 0 0);
     --sidebar-border: oklch(1 0 0 / 10%);
     --sidebar-ring: oklch(0.556 0 0);
+
+    /* Theme palette — black (dark) theme, the original Stealth look. */
+    --ink-950: 0 0 0;
+    --ink-900: 17 17 17;
+    --ink-800: 28 28 28;
+    --ink-700: 38 38 38;
+    --ink-600: 51 51 51;
+    --cream: 255 255 255;
+    --cream-dim: 229 229 229;
+    --cream-mute: 163 163 163;
   }
   * {
     @apply border-border;

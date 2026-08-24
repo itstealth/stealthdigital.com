@@ -114,7 +114,7 @@ export function TeamCarousel({ departments }: TeamCarouselProps) {
               }}
               className="team-card shrink-0 w-[78vw] sm:w-[260px] md:w-[300px] lg:w-[320px] xl:w-[340px] snap-start"
             >
-              <div className="relative rounded-[5px] overflow-hidden bg-white/5 backdrop-blur-xl">
+              <div className="relative rounded-[5px] overflow-hidden bg-ink-900/40 backdrop-blur-xl">
                 <div className="relative aspect-[3/4] overflow-hidden">
                   <Image
                     src={m.image}

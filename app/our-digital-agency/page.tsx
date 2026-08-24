@@ -396,7 +396,7 @@ export default function OurAgencyPage() {
               <div className="font-mono text-[11px] uppercase tracking-[0.2em] text-accent mb-3">
                 [What Makes Us Different]
               </div>
-              <h2 className="font-display text-3xl md:text-5xl font-bold tracking-tight text-white leading-[1.05]">
+              <h2 className="font-display text-3xl md:text-5xl font-bold tracking-tight text-cream leading-[1.05]">
                 The Stealth Difference.
               </h2>
             </div>

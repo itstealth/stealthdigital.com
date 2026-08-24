@@ -37,7 +37,7 @@ export function ThinkingTabs({ tabs, className }: ThinkingTabsProps) {
               aria-expanded={isOpen}
             >
               <div className="flex items-start justify-between gap-4">
-                <h3 className="text-lg md:text-2xl lg:text-3xl font-bold text-white leading-[1.15] tracking-tight flex-1">
+                <h3 className="text-lg md:text-2xl lg:text-3xl font-bold text-cream leading-[1.15] tracking-tight flex-1">
                   {tab.title}
                 </h3>
                 <motion.span

@@ -10,6 +10,7 @@ import { Magnetic } from "@/components/motion/Magnetic";
 import { SplitTextHover } from "@/components/motion/SplitTextHover";
 import { cn } from "@/lib/utils";
 import { Clock } from "./Clock";
+import { ThemeToggle } from "@/components/ui/ThemeToggle";
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -88,6 +89,10 @@ export function Navbar() {
             <div className="hidden xl:block">
               <Clock />
             </div>
+
+            {/* Sits right of the clock on xl; visible at all sizes so
+                mobile users can switch too */}
+            <ThemeToggle />
 
             <Magnetic strength={20} as="span">
               <Link

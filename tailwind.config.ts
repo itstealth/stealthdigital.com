@@ -43,12 +43,16 @@ const config: Config = {
         destructive: {
           DEFAULT: "var(--destructive)",
         },
+        // ink/cream read from CSS variables (app/globals.css) so the whole
+        // site flips between the black and white themes via the `dark` class.
+        // Stored as RGB triplets + <alpha-value> so opacity modifiers
+        // (bg-ink-950/85, text-cream/50) keep working in both themes.
         ink: {
-          950: "#000000",
-          900: "#111111",
-          800: "#1c1c1c",
-          700: "#262626",
-          600: "#333333",
+          950: "rgb(var(--ink-950) / <alpha-value>)",
+          900: "rgb(var(--ink-900) / <alpha-value>)",
+          800: "rgb(var(--ink-800) / <alpha-value>)",
+          700: "rgb(var(--ink-700) / <alpha-value>)",
+          600: "rgb(var(--ink-600) / <alpha-value>)",
         },
         accent: {
           DEFAULT: "#FFD60A", // Hi-vis Stealth Yellow
@@ -60,9 +64,9 @@ const config: Config = {
           700: "#997700",
         },
         cream: {
-          DEFAULT: "#FFFFFF",
-          dim: "#E5E5E5",
-          mute: "#A3A3A3",
+          DEFAULT: "rgb(var(--cream) / <alpha-value>)",
+          dim: "rgb(var(--cream-dim) / <alpha-value>)",
+          mute: "rgb(var(--cream-mute) / <alpha-value>)",
         },
       },
       borderRadius: {

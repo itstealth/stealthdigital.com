@@ -21,5 +21,5 @@ export const SITE = {
   // FormSubmit.co forwards every POST to rachitvats100@gmail.com.
   // First submission triggers a confirmation email from FormSubmit —
   // click the link in that email once and you're activated forever.
-  formspreeEndpoint: "https://formsubmit.co/rachitvats100@gmail.com",
+  formspreeEndpoint: "https://formsubmit.co/ajax/rachitvats100@gmail.com",
 };

@@ -54,9 +54,9 @@ export function LeadCapturePopup() {
 		return () => clearTimeout(t);
 	}, []);
 
-	// Manual open via floating button — still respects the submitted flag.
+	// Manual open via floating button — always allowed. The submitted flag
+	// only suppresses the auto-open popup; an explicit click must always work.
 	const manualOpen = () => {
-		if (typeof window !== "undefined" && window.localStorage.getItem(SUBMITTED_KEY) === "true") return;
 		setOpen(true);
 	};
 
@@ -102,7 +102,12 @@ export function LeadCapturePopup() {
 				},
 				body: body.toString(),
 			});
-			if (res.ok) {
+			const json = await res.json().catch(() => null);
+			const sent =
+				res.ok &&
+				json != null &&
+				(json.success === "true" || json.success === true);
+			if (sent) {
 				setStatus("success");
 				reset();
 				if (typeof window !== "undefined") {
@@ -126,12 +131,12 @@ export function LeadCapturePopup() {
 					<motion.button
 						type="button"
 						onClick={manualOpen}
-						initial={{ opacity: 0, x: 20 }}
-						animate={{ opacity: 1, x: 0 }}
-						exit={{ opacity: 0, x: 20 }}
+						initial={{ opacity: 0, x: 20, y: "-50%" }}
+						animate={{ opacity: 1, x: 0, y: "-50%" }}
+						exit={{ opacity: 0, x: 20, y: "-50%" }}
 						transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
 						className="
-							fixed right-0 top-1/2 -translate-y-1/2 z-[99]
+							fixed right-0 top-1/2 z-[110]
 							flex items-center gap-2.5
 							pl-4 pr-5 py-3.5
 							bg-accent text-ink-950

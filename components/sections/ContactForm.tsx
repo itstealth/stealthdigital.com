@@ -65,7 +65,12 @@ export function ContactForm() {
         },
         body: body.toString(),
       });
-      if (res.ok) {
+      const json = await res.json().catch(() => null);
+      const sent =
+        res.ok &&
+        json != null &&
+        (json.success === "true" || json.success === true);
+      if (sent) {
         setStatus("success");
         reset();
       } else {

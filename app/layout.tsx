@@ -9,7 +9,8 @@ import {
 } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/layout/Navbar";
-import { HoverFooter } from "@/components/ui/hover-footer";
+import { CinematicFooter } from "@/components/ui/motion-footer";
+import { MobileFooter } from "@/components/layout/MobileFooter";
 import { CustomCursor } from "@/components/motion/CustomCursor";
 import { SmoothScroll } from "@/components/motion/SmoothScroll";
 import { Preloader } from "@/components/motion/Preloader";
@@ -104,13 +105,28 @@ export default function RootLayout({
         "font-sans"
       )}
     >
+      <head>
+        {/* Apply the saved/system theme before first paint so there's no
+            white/black flash. Kept in sync with ThemeToggle (localStorage key
+            "theme": "light" | "dark"; absent = follow the OS). */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var t=localStorage.getItem("theme");if(t==="dark"||(!t&&window.matchMedia("(prefers-color-scheme: dark)").matches)){document.documentElement.classList.add("dark")}}catch(e){}})();`,
+          }}
+        />
+      </head>
       <body className="grain-overlay min-h-screen overflow-x-hidden bg-ink-950">
         <Preloader />
         <SmoothScroll />
         <CustomCursor />
         <Navbar />
         <main className="relative">{children}</main>
-        <HoverFooter />
+        <div className="hidden md:block">
+          <CinematicFooter />
+        </div>
+        <div className="md:hidden">
+          <MobileFooter />
+        </div>
       </body>
     </html>
   );

@@ -61,10 +61,10 @@ export function ServiceTabs() {
                   <motion.div
                     animate={{
                       rotate: active === i ? 45 : 0,
-                      color: active === i ? "#FFFFFF" : "rgba(255,255,255,0.2)",
+                      opacity: active === i ? 1 : 0.2,
                     }}
                     transition={{ duration: 0.4 }}
-                    className="shrink-0 hidden md:block"
+                    className="shrink-0 hidden md:block text-cream"
                   >
                     <ArrowUpRight size={48} strokeWidth={1} />
                   </motion.div>

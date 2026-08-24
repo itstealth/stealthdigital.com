@@ -61,11 +61,11 @@ export function Process() {
         <Reveal variant="up">
           <div className="max-w-4xl mb-6 px-4 md:mb-10 md:px-8">
             <TextBlockAnimation blockColor="#FFD60A">
-              <h2 className="font-display text-[9vw] font-bold leading-[0.9] tracking-[-0.04em] text-cream">
+              <h2 className="font-display text-[9vw] font-bold leading-[0.9] tracking-[-0.04em] text-white">
                 The Process
               </h2>
             </TextBlockAnimation>
-            <p className="mt-6 max-w-2xl text-xl text-cream/50 font-sans md:text-2xl">
+            <p className="mt-6 max-w-2xl text-xl text-white/50 font-sans md:text-2xl">
               A proven four-phase methodology. Built from 500+ engagements —
               refined into a system that compounds growth.
             </p>

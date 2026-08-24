@@ -41,20 +41,24 @@ const Card = ({
   rotate,
   colors: customColors,
 }: CardProps) => {
+  // This component only ever renders on the permanent-black Process canvas
+  // (background="black"), so the card stays light in BOTH themes — the dark:
+  // variants were dormant (the site never applied .dark) and would otherwise
+  // make the cards invisible against the black section once .dark activates.
   const defaultBgColors = {
-    orange: "bg-orange-50 dark:bg-orange-500/10",
-    blue: "bg-blue-50 dark:bg-blue-500/10",
-    purple: "bg-purple-50 dark:bg-purple-500/10",
+    orange: "bg-orange-50",
+    blue: "bg-blue-50",
+    purple: "bg-purple-50",
   };
   const defaultTextColors = {
-    orange: "text-orange-500 dark:text-orange-400",
-    blue: "text-blue-600 dark:text-blue-400",
-    purple: "text-purple-600 dark:text-purple-400",
+    orange: "text-orange-500",
+    blue: "text-blue-600",
+    purple: "text-purple-600",
   };
   const defaultBorderColors = {
-    orange: "border-orange-100 dark:border-orange-500/20",
-    blue: "border-blue-100 dark:border-blue-500/20",
-    purple: "border-purple-100 dark:border-purple-500/20",
+    orange: "border-orange-100",
+    blue: "border-blue-100",
+    purple: "border-purple-100",
   };
 
   const bgColor = customColors?.bg || defaultBgColors[colorTheme];
@@ -65,7 +69,7 @@ const Card = ({
     <div
       className={`relative w-full md:w-[280px] transition-transform duration-300 hover:z-30 hover:scale-105 ${rotate} ${className}`}
     >
-      <div className="bg-white dark:bg-neutral-900 p-2 rounded-[25px] shadow-[0px_10px_20px_0px_#D3D3D3] dark:shadow-none border border-neutral-100 dark:border-neutral-800">
+      <div className="bg-white p-2 rounded-[25px] shadow-[0px_10px_20px_0px_#D3D3D3] border border-neutral-100">
         <Pin className={`w-8 h-8 ${textColor} z-20 mb-6 mx-auto`} />
         <div
           className={`${bgColor} border ${borderColor} rounded-[15px] p-[15px] h-full flex flex-col relative overflow-hidden`}
@@ -78,10 +82,10 @@ const Card = ({
           >
             {number}
           </span>
-          <h3 className="text-2xl font-semibold text-neutral-800 dark:text-neutral-100 leading-none mb-[10px]">
+          <h3 className="text-2xl font-semibold text-neutral-800 leading-none mb-[10px]">
             {title}
           </h3>
-          <p className="text-neutral-500 dark:text-neutral-400 text-sm/5 tracking-tight">
+          <p className="text-neutral-500 text-sm/5 tracking-tight">
             {description}
           </p>
         </div>
@@ -234,12 +238,12 @@ export default function HowItWorks({
     <LazyMotion features={domAnimation}>
       <div
         ref={sectionRef}
-        className={`${background === "black" ? "bg-black" : "bg-white dark:bg-black"} max-md:pt-10 max-md:pb-25 md:py-20 px-8 relative ${className}`}
+        className={`${background === "black" ? "bg-black" : "bg-white"} max-md:pt-10 max-md:pb-25 md:py-20 px-8 relative ${className}`}
       >
         {background !== "black" && (
           <>
             <div
-              className="absolute inset-0 pointer-events-none opacity-[0.08] dark:opacity-[0.15]"
+              className="absolute inset-0 pointer-events-none opacity-[0.08]"
               style={{
                 backgroundImage: "linear-gradient(#000 1px, transparent 1px)",
                 backgroundSize: "100% 32px",
@@ -247,7 +251,7 @@ export default function HowItWorks({
               }}
             ></div>
             <div
-              className="absolute inset-0 pointer-events-none opacity-0 dark:opacity-[0.1]"
+              className="absolute inset-0 pointer-events-none opacity-0"
               style={{
                 backgroundImage: "linear-gradient(#fff 1px, transparent 1px)",
                 backgroundSize: "100% 32px",
