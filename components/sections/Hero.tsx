@@ -10,9 +10,9 @@ export function Hero() {
     <section className="relative min-h-screen bg-ink-950 flex flex-col">
       {/* Centered headline */}
       <div className="flex-1 flex flex-col items-center justify-center px-4 pt-32 pb-16 text-center">
-        <span className="font-mono text-sm md:text-base uppercase tracking-[0.3em] text-accent mb-6">
-          Your Strategic Partner in Brand Growth
-        </span>
+        <button className="font-display text-xs font-semibold uppercase tracking-[0.25em] text-ink-950 mb-6 rounded-full px-4 py-1.5 bg-gradient-to-r from-accent-400 via-accent to-accent-600 hover:opacity-90 transition-opacity">
+          Dubai | India | Canada
+        </button>
         <div className="container-fluid max-w-[1500px]">
           <TextBlockAnimation
             blockColor="#FFD60A"
@@ -21,12 +21,12 @@ export function Hero() {
             duration={0.8}
           >
             <h1 className="font-display text-[10vw] md:text-[8vw] font-bold leading-[0.9] tracking-[-0.04em] text-cream">
-              Let your brand own the spotlight
+              Your Strategic Partner in Brand Growth
             </h1>
           </TextBlockAnimation>
         </div>
         <p className="mt-8 text-lg text-cream/70 font-sans max-w-2xl">
-          Transforming 100+ Brands to Dominate the Next-Gen Era.
+          Your Strategic Partner in Brand Growth
         </p>
       </div>
 
@@ -36,7 +36,7 @@ export function Hero() {
           sits behind. */}
       <div className="w-full bg-ink-950/60 backdrop-blur-md pt-12 pb-10 border-y border-white/10 shadow-2xl">
         <div className="container-fluid flex items-center mb-6">
-          <span className="font-mono text-xs uppercase tracking-[0.2em] text-cream/50">
+          <span className="font-display text-xs uppercase tracking-[0.2em] text-cream/50">
             Trusted by ambitious brands
           </span>
         </div>

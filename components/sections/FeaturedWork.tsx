@@ -2,70 +2,14 @@
 
 import { Reveal } from "@/components/motion/Reveal";
 import TextBlockAnimation from "@/components/ui/text-block-animation";
-import { LayoutGrid } from "@/components/ui/layout-grid";
+import StackingCards, {
+  StackingCardItem,
+} from "@/components/ui/stacking-cards";
 import { CASE_STUDIES } from "@/data/caseStudies";
-import { ArrowUpRight } from "lucide-react";
-import Link from "next/link";
 
 export function FeaturedWork() {
-  // Bento layout: card 0 spans 2 cols, card 1 normal, card 2 normal, card 3 spans 2 cols.
-  const gridCards = CASE_STUDIES.slice(0, 4).map((study, i) => ({
-    id: i + 1,
-    className: i === 0 || i === 3 ? "md:col-span-2" : "col-span-1",
-    thumbnail: study.image,
-    alt: `${study.client} — ${study.title}`,
-    content: (
-      <div className="pb-2">
-        <div className="font-mono text-[10px] uppercase tracking-[0.25em] text-accent mb-2">
-          {study.industry}
-        </div>
-        <h3 className="font-display text-2xl md:text-4xl font-bold text-cream leading-[1.05] tracking-tight mb-3 max-w-2xl">
-          {study.title}
-        </h3>
-        <p className="text-cream/80 text-sm md:text-base leading-relaxed mb-5 max-w-2xl">
-          {study.summary}
-        </p>
-
-        {/* Metrics row */}
-        <div className="flex flex-wrap gap-x-8 gap-y-3 mb-5">
-          {study.metrics.map((m) => (
-            <div key={m.label}>
-              <div className="font-display text-xl md:text-2xl font-bold text-accent leading-none">
-                {m.value}
-              </div>
-              <div className="font-mono text-[9px] uppercase tracking-[0.18em] text-cream/60 mt-1">
-                {m.label}
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* Services */}
-        <div className="flex flex-wrap items-center gap-2 mb-5">
-          {study.services.map((s) => (
-            <span
-              key={s}
-              className="inline-flex items-center rounded-full border border-cream/20 bg-ink-950/60 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.2em] text-cream backdrop-blur-md"
-            >
-              {s}
-            </span>
-          ))}
-        </div>
-
-        {/* CTA */}
-        <Link
-          href={`/contact-us?ref=${study.slug}`}
-          className="inline-flex items-center gap-2 font-mono text-sm uppercase tracking-[0.18em] text-accent hover:text-cream transition-colors"
-        >
-          Start a similar project
-          <ArrowUpRight className="h-4 w-4" />
-        </Link>
-      </div>
-    ),
-  }));
-
   return (
-    <section id="work" className="relative py-20 md:py-28 bg-cream text-ink-950 overflow-hidden">
+    <section id="work" className="relative py-20 md:py-28 bg-cream text-ink-950">
       {/* Subtle paper grain so the white section still feels premium */}
       <div className="absolute inset-0 bg-grain opacity-[0.04] mix-blend-multiply pointer-events-none" />
       <div className="container-fluid relative">
@@ -81,11 +25,50 @@ export function FeaturedWork() {
             </p>
           </div>
         </Reveal>
-
-        <Reveal variant="up" delay={120} className="px-4 md:px-8">
-          <LayoutGrid cards={gridCards} theme="light" />
-        </Reveal>
       </div>
+
+      <StackingCards totalCards={CASE_STUDIES.length}>
+        {CASE_STUDIES.map((study, index) => (
+          <StackingCardItem
+            key={study.slug}
+            index={index}
+            className="h-[90vh]"
+          >
+            <div className="relative h-[80%] w-[92%] max-w-6xl mx-auto rounded-3xl overflow-hidden bg-ink-900 border border-ink-950/10 shadow-2xl flex flex-col md:flex-row">
+              <div className="md:w-1/2 h-56 md:h-full relative overflow-hidden">
+                <img
+                  src={study.image}
+                  alt={study.title}
+                  className="absolute inset-0 w-full h-full object-cover"
+                />
+              </div>
+              <div className="flex-1 p-8 md:p-12 flex flex-col justify-center">
+                <div className="font-mono text-xs uppercase tracking-[0.2em] text-accent mb-4">
+                  {study.industry}
+                </div>
+                <h3 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-cream leading-tight mb-4">
+                  {study.title}
+                </h3>
+                <p className="text-cream/70 text-sm md:text-base leading-relaxed mb-6">
+                  {study.summary}
+                </p>
+                <div className="flex flex-wrap gap-x-8 gap-y-4">
+                  {study.metrics.map((m) => (
+                    <div key={m.label}>
+                      <div className="font-display text-2xl font-bold text-accent leading-none">
+                        {m.value}
+                      </div>
+                      <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-cream/50 mt-1">
+                        {m.label}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </StackingCardItem>
+        ))}
+      </StackingCards>
     </section>
   );
 }
