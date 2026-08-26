@@ -56,7 +56,7 @@ const STEALTH_PROCESS: Step[] = [
  */
 export function Process() {
   return (
-    <section id="process" className="relative bg-black">
+    <section id="process" className="relative bg-black pt-20 md:pt-28">
       <div className="container-fluid">
         <Reveal variant="up">
           <div className="max-w-4xl mb-6 px-4 md:mb-10 md:px-8">
