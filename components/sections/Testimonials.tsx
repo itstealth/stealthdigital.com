@@ -105,7 +105,7 @@ export function Testimonials() {
               </span>
             </div>
             <TextBlockAnimation blockColor="#FFD60A">
-              <h2 className="font-display text-[44px] sm:text-[64px] md:text-[88px] font-bold leading-[0.95] tracking-[-0.04em] text-ink-950 max-w-5xl">
+              <h2 className="testimonials-heading font-display text-[44px] sm:text-[64px] md:text-[88px] font-bold leading-[0.95] tracking-[-0.04em] text-ink-950 max-w-5xl">
                 What Our Happy Clients Say About Us
               </h2>
             </TextBlockAnimation>

@@ -231,6 +231,55 @@
   }
 }
 
+/*
+ * Light-theme outline for accent-yellow text.
+ * ------------------------------------------
+ * #FFD60A on the light theme's white page background has almost no
+ * contrast, so every piece of yellow text gets a dark outline — but only
+ * when `.dark` is absent (`:root` is the light palette; see the token
+ * blocks at the top of this file).
+ *
+ * Width scales with font-size instead of sitting at a flat 3px: the site
+ * uses accent yellow on everything from 10px eyebrows to 150px display
+ * headings, and a 3px stroke on 11px type fuses the letterforms into a
+ * solid blob. `clamp(0px, calc(0.1em - 1.1px), 3px)` yields no stroke at
+ * all below ~12px (eyebrows, labels, counters), a thin outline through
+ * the mid sizes, and the full 3px from ~44px headings up.
+ *
+ * `paint-order` puts the stroke behind the fill so the yellow stays at
+ * full weight. Browsers without it on HTML text still render the stroke,
+ * just centred on the glyph edge.
+ *
+ * .eyebrow and .number-marker are listed explicitly: they pull the colour
+ * in via `@apply text-accent`, so the elements themselves never carry a
+ * `text-accent` class for the selector to match.
+ */
+html:not(.dark) .text-accent,
+html:not(.dark) .text-accent\/70,
+html:not(.dark) .eyebrow,
+html:not(.dark) .number-marker,
+html:not(.dark) .hover\:text-accent:hover,
+html:not(.dark) .group:hover .group-hover\:text-accent {
+  -webkit-text-stroke-width: clamp(0px, calc(0.1em - 1.1px), 3px);
+  -webkit-text-stroke-color: rgb(var(--cream));
+  paint-order: stroke fill;
+}
+
+/*
+ * Client Voices section headline.
+ * -------------------------------
+ * The section's main h2 is `text-ink-950` — white on the section's dark
+ * background in light theme — so it carries no `text-accent` class and the
+ * rule above never touches it. Outline it explicitly in accent yellow so
+ * the headline gets the same editorial stroke treatment as the rest of the
+ * site's yellow text. Scoped via `.testimonials-heading` on that heading.
+ */
+html:not(.dark) .testimonials-heading {
+  -webkit-text-stroke-width: 3px;
+  -webkit-text-stroke-color: #ffd60a;
+  paint-order: stroke fill;
+}
+
 /* Infinite horizontal ticker — content is duplicated in the markup
    so translating by -50% produces a seamless loop. */
 @keyframes marquee {
