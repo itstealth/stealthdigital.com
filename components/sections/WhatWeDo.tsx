@@ -43,14 +43,15 @@ const ICON_MAP: Record<string, LucideIcon> = {
   "video-production": Video,
 };
 
-// Card-specific cover images. Only the Web Development card has a front-cover
-// image for now; other cards fall back to the plain text-only layout.
+// Card-specific cover images. Every service now has a photo cover.
+// Filenames are URL-encoded (spaces / punctuation).
 const COVER_IMAGES: Record<string, string> = {
-  "search-engine-optimization": "/images/SEO.jpg",
-  "search-engine-marketing": "/images/PM.jpg",
-  "social-media-marketing": "/images/SMO.jpg",
-  "website-design-development": "/images/web developmentt.jpg",
-  "ui-ux-design": "/images/UIUX.jpg",
+  "search-engine-optimization": "/SEO.jpeg",
+  "search-engine-marketing": "/ppc.jpeg",
+  "social-media-marketing": "/social%20media%20.jpeg",
+  "website-design-development": "/web%20development.jpeg",
+  "ui-ux-design": "/WhatsApp%20Image%202026-08-26%20at%206.01.06%20PM.jpeg",
+  "video-production": "/video.jpeg",
 };
 
 function ServiceCard({ service, index }: { service: Service; index: number }) {

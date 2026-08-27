@@ -11,67 +11,60 @@ export interface CaseStudy {
 
 export const CASE_STUDIES: CaseStudy[] = [
   {
-    slug: "gl-bajaj-seo",
-    client: "GL Bajaj Institute",
+    slug: "kevasiya-luxury-gifting",
+    client: "Kevasiya Luxury Gifting",
+    industry: "Luxury Gifting",
+    title: "From Junk Leads to High-Value Luxury Gifting Clients",
+    summary:
+      "Kevasiya offers premium bulk gifts for weddings, baby showers, festivals, and corporate events — but was drowning in irrelevant, low-budget inquiries that didn't match its premium positioning. We launched a targeted Instagram DM campaign aimed at high-income audiences, using reel-based and UGC-style creatives to attract the right buyers.",
+    image: "/images/kevasiya.jpg",
+    metrics: [
+      { label: "Inquiry Quality", value: "+50%" },
+      { label: "High-Budget Leads", value: "Every 2–3" },
+    ],
+    services: ["Social Media", "Content", "UGC"],
+  },
+  {
+    slug: "gla-university-admissions",
+    client: "GLA University",
     industry: "Education",
-    title: "From page 5 to page 1 in 90 days",
+    title: "Driving Admission Growth with Performance Marketing",
     summary:
-      "End-to-end SEO overhaul for one of Delhi NCR's leading institutes. We rebuilt the site architecture, launched 40+ optimized landing pages, and built authority through digital PR.",
-    image:
-      "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1600&q=80",
+      "GLA University wanted more qualified admission inquiries for its programs through digital channels. We ran a performance marketing strategy built on Google Search and Meta campaigns, with remarketing to re-engage interested students and website visitors. Continuous campaign and landing page optimization cut cost per lead by 20% while lifting lead quality.",
+    image: "/images/GL-BAJAJ.jpg",
     metrics: [
-      { label: "Organic Traffic", value: "+412%" },
-      { label: "Lead Form Submissions", value: "+187%" },
-      { label: "Keywords on Page 1", value: "120+" },
+      { label: "Cost per Lead", value: "-20%" },
+      { label: "Lead Quality", value: "Improved" },
     ],
-    services: ["SEO", "Content", "Web Design"],
+    services: ["PPC", "Performance", "Landing Pages"],
   },
   {
-    slug: "indo-global-brand-launch",
-    client: "Indo Global Group",
-    industry: "Conglomerate",
-    title: "Launching a multi-vertical digital presence",
-    summary:
-      "We designed and built the digital home for Indo Global's six verticals — from real estate to education. Unified brand system, six bespoke sites, and a paid acquisition engine.",
-    image:
-      "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1600&q=80",
-    metrics: [
-      { label: "Branded Search", value: "+260%" },
-      { label: "Lead Volume", value: "+95%" },
-      { label: "Cost per Lead", value: "-58%" },
-    ],
-    services: ["Web Design", "Branding", "PPC"],
-  },
-  {
-    slug: "imm-delhi-social",
-    client: "IMM Delhi",
+    slug: "bhanwar-rathore-design-seo",
+    client: "Bhanwar Rathore Design Studio",
     industry: "Education",
-    title: "Social-first growth for a legacy institution",
+    title: "Improving Organic Visibility for a Design Entrance Coaching Institute",
     summary:
-      "Transformed IMM Delhi's Instagram and LinkedIn from static posters to a content engine producing 60+ reels a month. Community management, influencer partnerships, and paid amplification.",
-    image:
-      "https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&w=1600&q=80",
+      "Bhanwar Rathore Design Studio coaches students for design entrance exams — NID, NIFT, UCEED, NATA — and needed to rank for the queries students actually search. With competition for design-education keywords high, we built a targeted SEO strategy around keyword optimization and high-quality, intent-matched content. The site climbed Google rankings for several design keywords, with steady growth in organic traffic and student inquiries.",
+    image: "/images/BRDS.webp",
     metrics: [
-      { label: "Followers", value: "+1,025%" },
-      { label: "Engagement Rate", value: "8.4%" },
-      { label: "Direct Inquiries", value: "+340%" },
+      { label: "Google Rankings", value: "Improved" },
+      { label: "Organic Traffic", value: "Steady Growth" },
     ],
-    services: ["Social Media", "Content", "Influencer"],
+    services: ["SEO", "Content"],
   },
   {
-    slug: "bloom-beverages",
-    client: "Bloom Beverages",
-    industry: "F&B / D2C",
-    title: "D2C scale-up from ₹40L to ₹2.1Cr MRR",
+    slug: "ims-ghaziabad-social",
+    client: "IMS Ghaziabad",
+    industry: "Education",
+    title: "A Feed That Now Speaks for Every IMS Voice",
     summary:
-      "Full-funnel growth for a new-age beverage brand. Performance creative, lifecycle email, and a relentless focus on CAC:LTV. Built the entire backend analytics from scratch.",
-    image:
-      "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=1600&q=80",
+      "IMS Ghaziabad, a leading PGDM institute in North India, had a social presence that lacked engagement and authentic student storytelling. We rebuilt the content strategy around student-first narratives, campus-life reels, and high-engagement formats — turning the page into a living community. Engagement climbed from 3.8% to 4.72%, with multiple reels crossing 103K+ views. We then strengthened LinkedIn with algorithm-aligned, thought-leadership content for students, alumni, and industry audiences.",
+    image: "/images/imsss.jpg",
     metrics: [
-      { label: "Blended ROAS", value: "5.8x" },
-      { label: "MRR Growth", value: "+425%" },
-      { label: "Repeat Purchase Rate", value: "+62%" },
+      { label: "Engagement Rate", value: "3.8% → 4.72%" },
+      { label: "Followers", value: "+25%" },
+      { label: "Instagram Reach", value: "+45.4%" },
     ],
-    services: ["PPC", "Email", "Analytics"],
+    services: ["Social Media", "Content", "LinkedIn"],
   },
 ];

@@ -43,8 +43,11 @@ export function FeaturedWork() {
                 />
               </div>
               <div className="flex-1 p-8 md:p-12 flex flex-col justify-center">
-                <div className="font-mono text-xs uppercase tracking-[0.2em] text-accent mb-4">
+                <div className="font-mono text-xs uppercase tracking-[0.2em] text-accent mb-2">
                   {study.industry}
+                </div>
+                <div className="font-display text-lg md:text-xl font-semibold text-cream/80 mb-3">
+                  {study.client}
                 </div>
                 <h3 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-cream leading-tight mb-4">
                   {study.title}

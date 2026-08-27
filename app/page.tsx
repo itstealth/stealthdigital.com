@@ -6,7 +6,7 @@ import { Awards } from "@/components/sections/Awards";
 import { Process } from "@/components/sections/Process";
 import { About } from "@/components/sections/About";
 import { FeaturedWork } from "@/components/sections/FeaturedWork";
-import { CTA } from "@/components/sections/CTA";
+import { LetsWorkTogether } from "@/components/ui/lets-work-section";
 import { LeadCapturePopup } from "@/components/ui/LeadCapturePopup";
 
 export default function HomePage() {
@@ -20,7 +20,7 @@ export default function HomePage() {
       <Process />
       <About />
       <FeaturedWork />
-      <CTA />
+      <LetsWorkTogether />
       <LeadCapturePopup />
     </>
   );

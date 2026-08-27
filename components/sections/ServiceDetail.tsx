@@ -44,6 +44,16 @@ interface ServiceDetailProps {
   };
   painPoints: PainPoint[];
   tools: Tool[];
+  /**
+   * Optional visual rendered in the right column of the hero (text stays
+   * left). When omitted, the hero is the default single-column text layout.
+   */
+  heroVisual?: React.ReactNode;
+  /**
+   * Optional full-width section rendered immediately below the hero, before
+   * the image break. Used to place the tech-stack orbit section.
+   */
+  afterHero?: React.ReactNode;
 }
 
 export function ServiceDetail({
@@ -55,6 +65,8 @@ export function ServiceDetail({
   caseStudy,
   painPoints,
   tools,
+  heroVisual,
+  afterHero,
 }: ServiceDetailProps) {
   return (
     <>
@@ -70,37 +82,49 @@ export function ServiceDetail({
         </div>
 
         <div className="container-x">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="flex items-center gap-3 mb-8"
-          >
-            <span className="h-px w-10 bg-accent" />
-            <span className="font-mono text-xs uppercase tracking-[0.25em] text-accent">
-              [{service.shortTitle} / 01]
-            </span>
-          </motion.div>
+          <div className="lg:grid lg:grid-cols-12 lg:gap-10 lg:items-center">
+            <div className="lg:col-span-7">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+                className="flex items-center gap-3 mb-8"
+              >
+                <span className="h-px w-10 bg-accent" />
+                <span className="font-mono text-xs uppercase tracking-[0.25em] text-accent">
+                  [{service.shortTitle} / 01]
+                </span>
+              </motion.div>
 
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="font-display text-[44px] sm:text-[64px] md:text-[88px] lg:text-[112px] font-bold leading-[0.95] tracking-[-0.04em] text-balance text-cream max-w-5xl"
-          >
-            {service.title}
-          </motion.h1>
+              <motion.h1
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8 }}
+                className="font-display text-[44px] sm:text-[64px] md:text-[88px] lg:text-[112px] font-bold leading-[0.95] tracking-[-0.04em] text-balance text-cream max-w-5xl"
+              >
+                {service.title}
+              </motion.h1>
 
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.3 }}
-            className="mt-10 text-lg md:text-2xl text-cream/70 leading-relaxed max-w-3xl text-pretty font-display"
-          >
-            {service.tagline}
-          </motion.p>
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, delay: 0.3 }}
+                className="mt-10 text-lg md:text-2xl text-cream/70 leading-relaxed max-w-3xl text-pretty font-display"
+              >
+                {service.tagline}
+              </motion.p>
+            </div>
+
+            {heroVisual && (
+              <div className="hidden lg:flex lg:col-span-5 items-center justify-center">
+                {heroVisual}
+              </div>
+            )}
+          </div>
         </div>
       </section>
+
+      {afterHero}
 
       {/* Image break */}
       <section className="py-8 md:py-12">

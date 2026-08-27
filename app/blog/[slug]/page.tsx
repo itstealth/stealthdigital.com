@@ -7,7 +7,7 @@ import { format, parseISO } from "date-fns";
 import { Reveal } from "@/components/motion/Reveal";
 import { Parallax } from "@/components/motion/Parallax";
 import { getAllSlugs, getPostBySlug, getRelatedPosts } from "@/lib/blog";
-import { CTA } from "@/components/sections/CTA";
+import { LetsWorkTogether } from "@/components/ui/lets-work-section";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -203,7 +203,7 @@ export default async function BlogPostPage({ params }: PageProps) {
         </section>
       )}
 
-      <CTA />
+      <LetsWorkTogether />
 
       {/* Prose styles */}
       <style>{`

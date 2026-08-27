@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { ServiceDetail } from "@/components/sections/ServiceDetail";
+import { TechOrbit } from "@/components/ui/stack-feature-section";
 import { getServiceBySlug } from "@/data/services";
 
 export const metadata: Metadata = {
@@ -14,6 +15,7 @@ export default function SocialMediaPage() {
   return (
     <ServiceDetail
       service={service}
+      heroVisual={<TechOrbit />}
       intro="Social media in 2025 isn't about posting more — it's about posting with intent. The brands winning right now treat social as a full-funnel channel: awareness at the top, consideration in the middle, conversion at the bottom. We've built organic and paid social systems for 100+ brands — D2C, B2B, creators, and enterprises — and we know what actually works on each platform. No 'just post reels' advice, no engagement-bait tactics. Strategy, creative, distribution, and measurement — engineered to compound."
       painPoints={[
         {

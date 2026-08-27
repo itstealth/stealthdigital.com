@@ -7,7 +7,7 @@ import { Reveal } from "@/components/motion/Reveal";
 import { Parallax } from "@/components/motion/Parallax";
 import { SERVICES } from "@/data/services";
 import { Process } from "@/components/sections/Process";
-import { CTA } from "@/components/sections/CTA";
+import { LetsWorkTogether } from "@/components/ui/lets-work-section";
 import { InteractiveRobotSpline } from "@/components/ui/interactive-3d-robot";
 
 export const metadata: Metadata = {
@@ -89,7 +89,7 @@ export default function ServicesPage() {
       </section>
 
       <Process />
-      <CTA />
+      <LetsWorkTogether />
     </>
   );
 }
