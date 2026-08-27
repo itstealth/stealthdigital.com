@@ -4,6 +4,7 @@ import { Marquee } from "@/components/motion/Marquee";
 import { BrandLogo } from "@/components/ui/BrandLogo";
 import TextBlockAnimation from "@/components/ui/text-block-animation";
 import { SplineScene } from "@/components/ui/splite";
+import { Component as SilkBackground } from "@/components/ui/silk-background-animation";
 import { Button } from "@/components/ui/Button";
 import { CLIENT_LOGOS } from "@/data/clientLogos";
 
@@ -18,10 +19,13 @@ export function Hero() {
 
   return (
     <section className="relative min-h-screen bg-ink-950 flex flex-col overflow-hidden">
+      {/* Animated silk canvas background — sits behind all hero content */}
+      <SilkBackground />
+
       {/* Text left / 3D robot right — headline kept as-is, just left-aligned */}
-      <div className="relative z-10 flex-1 w-full max-w-[1500px] mx-auto grid lg:grid-cols-2 items-center gap-12 lg:gap-8 px-4 md:px-8 pt-32 pb-16">
+      <div className="relative z-10 flex-1 w-full max-w-[1500px] mx-auto grid lg:grid-cols-2 items-center lg:items-end gap-12 lg:gap-8 px-4 md:px-8 pt-32 pb-0">
         {/* Left column — text */}
-        <div className="text-left">
+        <div className="text-left pb-16 lg:pb-24">
           <button className="font-display text-xs font-semibold uppercase tracking-[0.25em] text-ink-950 mb-6 rounded-full px-4 py-1.5 bg-gradient-to-r from-accent-400 via-accent to-accent-600 hover:opacity-90 transition-opacity">
             Dubai | India | Canada
           </button>
@@ -51,11 +55,13 @@ export function Hero() {
           </div>
         </div>
 
-        {/* Right column — interactive 3D robotic scene */}
-        <div className="relative w-full h-[50vh] md:h-[60vh] lg:h-[72vh]">
+        {/* Right column — interactive 3D robotic scene, anchored to the
+            bottom edge of the hero so it reads as standing on the floor
+            rather than floating mid-section */}
+        <div className="relative w-full h-[50vh] md:h-[60vh] lg:h-[72vh] self-end">
           <SplineScene
             scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
-            className="absolute inset-0 w-full h-full"
+            className="absolute inset-x-0 bottom-0 w-full h-full"
           />
         </div>
       </div>

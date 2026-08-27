@@ -30,6 +30,7 @@ export const BUSINESS_OBJECTIVES: NavGroup = {
 
 export const MAIN_NAV: NavItem[] = [
   { label: "Services", href: "/services" },
+  { label: "Industries", href: "/industries" },
   { label: "Work", href: "/#work" },
   { label: "About", href: "/about-us" },
   { label: "Blog", href: "/blog" },
