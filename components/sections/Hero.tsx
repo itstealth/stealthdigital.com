@@ -22,52 +22,47 @@ export function Hero() {
       {/* Animated silk canvas background — sits behind all hero content */}
       <SilkBackground />
 
-      {/* Text spans the full width of the hero, left-aligned. The 3D robot
-          is layered on top (higher z-index) on the right side, so it
-          overlaps the headline instead of sitting in its own column. */}
-      <div className="relative z-10 flex-1 w-full max-w-[1600px] mx-auto px-4 md:px-8 pt-32 pb-0">
-        <div className="relative">
-          {/* Text — full-width, left-aligned, enlarged */}
-          <div className="relative z-10 text-left pb-24 lg:pb-32">
-            <button className="font-display text-xs font-semibold uppercase tracking-[0.25em] text-ink-950 mb-6 rounded-full px-4 py-1.5 bg-gradient-to-r from-accent-400 via-accent to-accent-600 hover:opacity-90 transition-opacity">
-              Dubai | India | Canada
-            </button>
-            <TextBlockAnimation
-              blockColor="#FFD60A"
-              animateOnScroll={false}
-              delay={0.2}
-              duration={0.8}
-            >
-              <h1 className="font-display text-[13vw] sm:text-[11vw] md:text-[9vw] lg:text-[7vw] xl:text-[6.5vw] font-bold leading-[0.88] tracking-[-0.04em] text-cream">
-                Your Strategic Partner in Brand Growth
-              </h1>
-            </TextBlockAnimation>
-            <p className="mt-8 text-lg md:text-xl text-cream/70 font-sans max-w-2xl">
+      {/* Text left / 3D robot right — headline kept as-is, just left-aligned */}
+      <div className="relative z-10 flex-1 w-full max-w-[1500px] mx-auto grid lg:grid-cols-2 items-center lg:items-end gap-12 lg:gap-8 px-4 md:px-8 pt-32 pb-0">
+        {/* Left column — text */}
+        <div className="text-left pb-16 lg:pb-24">
+          <button className="font-display text-xs font-semibold uppercase tracking-[0.25em] text-ink-950 mb-6 rounded-full px-4 py-1.5 bg-gradient-to-r from-accent-400 via-accent to-accent-600 hover:opacity-90 transition-opacity">
+            Dubai | India | Canada
+          </button>
+          <TextBlockAnimation
+            blockColor="#FFD60A"
+            animateOnScroll={false}
+            delay={0.2}
+            duration={0.8}
+          >
+            <h1 className="font-display text-[10vw] md:text-[8vw] lg:text-[4.5vw] xl:text-[4vw] font-bold leading-[0.9] tracking-[-0.04em] text-cream">
               Your Strategic Partner in Brand Growth
-            </p>
+            </h1>
+          </TextBlockAnimation>
+          <p className="mt-8 text-lg text-cream/70 font-sans max-w-2xl">
+            Your Strategic Partner in Brand Growth
+          </p>
 
-            {/* CTAs — Get Started opens the floating lead form, Work jumps to
-                the featured-work section */}
-            <div className="mt-10 flex flex-wrap items-center gap-4">
-              <Button onClick={openLeadForm} variant="primary" size="lg" showArrow magnetic>
-                Get Started
-              </Button>
-              <Button href="/#work" variant="outline" size="lg" magnetic>
-                Work
-              </Button>
-            </div>
+          {/* CTAs — Get Started opens the floating lead form, Work jumps to
+              the featured-work section */}
+          <div className="mt-10 flex flex-wrap items-center gap-4">
+            <Button onClick={openLeadForm} variant="primary" size="lg" showArrow magnetic>
+              Get Started
+            </Button>
+            <Button href="/#work" variant="outline" size="lg" magnetic>
+              Work
+            </Button>
           </div>
+        </div>
 
-          {/* 3D robot — absolutely positioned on the right, layered above
-              the text (z-20), anchored to the bottom edge of the hero. */}
-          <div className="absolute inset-y-0 right-0 z-20 w-full sm:w-[80%] lg:w-[55%] pointer-events-none">
-            <div className="relative w-full h-full pointer-events-auto">
-              <SplineScene
-                scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
-                className="absolute inset-x-0 bottom-0 w-full h-[55vh] sm:h-[60vh] md:h-[68vh] lg:h-[78vh]"
-              />
-            </div>
-          </div>
+        {/* Right column — interactive 3D robotic scene, anchored to the
+            bottom edge of the hero so it reads as standing on the floor
+            rather than floating mid-section */}
+        <div className="relative w-full h-[50vh] md:h-[60vh] lg:h-[72vh] self-end">
+          <SplineScene
+            scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
+            className="absolute inset-x-0 bottom-0 w-full h-full"
+          />
         </div>
       </div>
 
