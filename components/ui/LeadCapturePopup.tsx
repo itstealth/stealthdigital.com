@@ -84,6 +84,14 @@ export function LeadCapturePopup() {
     setOpen(true);
   };
 
+  // Open on demand from elsewhere on the page (e.g. the hero "Get Started"
+  // button) via a window custom event — same always-open behaviour.
+  useEffect(() => {
+    const onOpen = () => setOpen(true);
+    window.addEventListener("stealth:open-lead-form", onOpen);
+    return () => window.removeEventListener("stealth:open-lead-form", onOpen);
+  }, []);
+
   // Lock body scroll while the modal is open so the page behind
   // doesn't shift when the scrollbar disappears.
   useEffect(() => {

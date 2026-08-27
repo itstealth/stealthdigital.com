@@ -1,6 +1,6 @@
 "use client";
 
-import { useLayoutEffect, useRef } from "react";
+import { useEffect, useLayoutEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -22,10 +22,37 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
  * ScrollTriggers + reverting the context BEFORE React commits the
  * unmount.
  */
+const HLS_SRC = "/videos/hls/render/index.m3u8";
+const MP4_FALLBACK_SRC = "/videos/Render-web.mp4";
+
 export function ShowreelScroll() {
   const sectionRef = useRef<HTMLElement>(null);
   const videoBoxRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
+
+  // Load the video as HLS chunks (via hls.js, or natively in Safari) so the
+  // browser only fetches small segments as playback progresses instead of
+  // the whole file upfront. Falls back to the plain mp4 if HLS isn't usable.
+  useEffect(() => {
+    const video = videoRef.current!;
+    let hls: import("hls.js").default | undefined;
+
+    if (video.canPlayType("application/vnd.apple.mpegurl")) {
+      video.src = HLS_SRC;
+    } else {
+      import("hls.js").then(({ default: Hls }) => {
+        if (Hls.isSupported()) {
+          hls = new Hls();
+          hls.loadSource(HLS_SRC);
+          hls.attachMedia(video);
+        } else {
+          video.src = MP4_FALLBACK_SRC;
+        }
+      });
+    }
+
+    return () => hls?.destroy();
+  }, []);
 
   // useLayoutEffect runs cleanup synchronously BEFORE React commits
   // unmount, which is essential when GSAP has re-parented the section.
@@ -117,7 +144,7 @@ export function ShowreelScroll() {
               <video
                 ref={videoRef}
                 className="absolute inset-0 h-full w-full object-cover"
-                src="/videos/showreel.mp4"
+                preload="auto"
                 autoPlay
                 muted
                 loop
