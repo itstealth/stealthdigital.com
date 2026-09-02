@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import {
   Bricolage_Grotesque,
   Crimson_Text,
@@ -105,6 +106,18 @@ export default function RootLayout({
       )}
     >
       <head>
+        {/* Google Tag Manager — as high in <head> as possible. Uses next/script
+            so the App Router doesn't strip the inline tag; afterInteractive
+            keeps it off the critical path without delaying the container
+            past hydration. Container: GTM-5NW7F5FL */}
+        <Script id="gtm-base" strategy="afterInteractive">
+          {`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-5NW7F5FL');`}
+        </Script>
+
         {/* Apply the saved/system theme before first paint so there's no
             white/black flash. Kept in sync with ThemeToggle (localStorage key
             "theme": "light" | "dark"; absent = follow the OS). */}
@@ -115,6 +128,17 @@ export default function RootLayout({
         />
       </head>
       <body className="grain-overlay min-h-screen overflow-x-hidden bg-ink-950">
+        {/* Google Tag Manager (noscript) — immediately after the opening
+            <body> tag, per GTM's install instructions. */}
+        <noscript>
+          <iframe
+            src="https://www.googletagmanager.com/ns.html?id=GTM-5NW7F5FL"
+            height="0"
+            width="0"
+            style={{ display: "none", visibility: "hidden" }}
+          />
+        </noscript>
+
         <Preloader />
         <SmoothScroll />
         <CustomCursor />

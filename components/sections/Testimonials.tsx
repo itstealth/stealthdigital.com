@@ -7,6 +7,7 @@ import { Quote, ArrowLeft, ArrowRight } from "lucide-react";
 import { Reveal } from "@/components/motion/Reveal";
 import TextBlockAnimation from "@/components/ui/text-block-animation";
 import { TESTIMONIALS } from "@/data/testimonials";
+import { useHeavyEffectsAllowed } from "@/lib/use-heavy-effects";
 
 // SplashCursor is a WebGL fluid effect — only loaded on the client and
 // only mounted while the Client Voices section is in view, so the heavy
@@ -61,6 +62,27 @@ export function Testimonials() {
   const sectionRef = useRef<HTMLElement>(null);
   const inView = useInView(sectionRef, { margin: "0px 0px -10% 0px" });
 
+  // The WebGL fluid sim is full-viewport and runs every frame, so it is
+  // limited to devices that can absorb it (see the hook for the criteria).
+  const heavyEffectsAllowed = useHeavyEffectsAllowed();
+
+  // The testimonial clip only plays while the section is on screen. It also
+  // carries preload="none" + a poster, so nothing is fetched until the user
+  // actually scrolls here — the video is otherwise the single heaviest thing
+  // on the homepage.
+  const videoRef = useRef<HTMLVideoElement>(null);
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    if (inView) {
+      // play() rejects if the tab is backgrounded or the user has data saver
+      // on; that's fine, the poster stays up.
+      void video.play().catch(() => {});
+    } else {
+      video.pause();
+    }
+  }, [inView]);
+
   return (
     <section
       ref={sectionRef}
@@ -69,7 +91,7 @@ export function Testimonials() {
       {/* SplashCursor — full-viewport WebGL fluid cursor. Only mounted
           while the section is in view; pointer-events:none so it never
           blocks clicks. */}
-      {inView && (
+      {inView && heavyEffectsAllowed && (
         <SplashCursor
           DENSITY_DISSIPATION={3.5}
           VELOCITY_DISSIPATION={2}
@@ -177,9 +199,11 @@ export function Testimonials() {
                 className="relative aspect-[4/5] w-full overflow-hidden rounded-2xl bg-ink-950 shadow-2xl shadow-black/30"
               >
                 <video
+                  ref={videoRef}
                   className="absolute inset-0 h-full w-full object-cover"
-                  src="/videos/testi demo .mp4"
-                  autoPlay
+                  src="/videos/testimonial.mp4"
+                  poster="/videos/testimonial-poster.jpg"
+                  preload="none"
                   muted
                   loop
                   playsInline

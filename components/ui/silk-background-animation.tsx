@@ -7,7 +7,24 @@ import React, { useEffect, useRef } from 'react';
  * pattern rendered to a full-bleed <canvas>. Pure background layer: no
  * text/content of its own, so it can sit behind any hero content
  * (headline, CTAs, 3D scenes, etc.) via `absolute inset-0`.
+ *
+ * The pattern is generated pixel-by-pixel on the CPU, so it is drawn into a
+ * small offscreen buffer (a quarter of the display size per axis, i.e. 1/16th
+ * the pixels) and upscaled by the GPU on draw — the texture is soft enough
+ * that the upscale is not visible. The buffer is allocated once per resize
+ * instead of once per frame, the loop is capped at 30fps, and it suspends
+ * whenever the hero scrolls out of view or the tab is hidden.
+ *
+ * Previously this allocated a full-size ImageData every frame (~8MB per frame
+ * at 1080p) and ran ~500k trig-heavy iterations at 60fps, which saturated a
+ * core and janked the whole page.
  */
+
+// Linear downscale factor for the generated pattern. 0.25 => 1/16th the pixels.
+const RES_SCALE = 0.25;
+// The pattern drifts slowly; 30fps is indistinguishable from 60 here.
+const FRAME_MS = 1000 / 30;
+
 export const Component = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animationRef = useRef<number | undefined>(undefined);
@@ -24,10 +41,26 @@ export const Component = () => {
     const scale = 2;
     const noiseIntensity = 0.8;
 
+    // Offscreen buffer the pattern is generated into, then upscaled from.
+    const buffer = document.createElement('canvas');
+    const bctx = buffer.getContext('2d');
+    if (!bctx) return;
+
+    let imageData: ImageData | null = null;
+
     const resizeCanvas = () => {
       const parent = canvas.parentElement;
-      canvas.width = parent ? parent.clientWidth : window.innerWidth;
-      canvas.height = parent ? parent.clientHeight : window.innerHeight;
+      const width = parent ? parent.clientWidth : window.innerWidth;
+      const height = parent ? parent.clientHeight : window.innerHeight;
+      if (width === 0 || height === 0) return;
+
+      canvas.width = width;
+      canvas.height = height;
+
+      buffer.width = Math.max(1, Math.round(width * RES_SCALE));
+      buffer.height = Math.max(1, Math.round(height * RES_SCALE));
+      // Allocated once per resize, then reused every frame.
+      imageData = bctx.createImageData(buffer.width, buffer.height);
     };
 
     resizeCanvas();
@@ -41,30 +74,20 @@ export const Component = () => {
       return (rx * ry * (1 + x)) % 1;
     };
 
-    const animate = () => {
-      const { width, height } = canvas;
-
-      // Create gradient background
-      const gradient = ctx.createLinearGradient(0, 0, width, height);
-      gradient.addColorStop(0, '#1a1a1a');
-      gradient.addColorStop(0.5, '#2a2a2a');
-      gradient.addColorStop(1, '#1a1a1a');
-
-      ctx.fillStyle = gradient;
-      ctx.fillRect(0, 0, width, height);
-
-      // Create silk-like pattern
-      const imageData = ctx.createImageData(width, height);
+    const renderFrame = () => {
+      if (!imageData) return;
+      const bw = buffer.width;
+      const bh = buffer.height;
       const data = imageData.data;
+      const tOffset = speed * time;
 
-      for (let x = 0; x < width; x += 2) {
-        for (let y = 0; y < height; y += 2) {
-          const u = (x / width) * scale;
-          const v = (y / height) * scale;
+      for (let y = 0; y < bh; y++) {
+        const v = (y / bh) * scale;
+        for (let x = 0; x < bw; x++) {
+          const u = (x / bw) * scale;
 
-          const tOffset = speed * time;
-          let tex_x = u;
-          let tex_y = v + 0.03 * Math.sin(8.0 * tex_x - tOffset);
+          const tex_x = u;
+          const tex_y = v + 0.03 * Math.sin(8.0 * tex_x - tOffset);
 
           const pattern =
             0.6 +
@@ -82,24 +105,22 @@ export const Component = () => {
           const intensity = Math.max(0, pattern - (rnd / 15.0) * noiseIntensity);
 
           // Purple-gray silk color
-          const r = Math.floor(123 * intensity);
-          const g = Math.floor(116 * intensity);
-          const b = Math.floor(129 * intensity);
-          const a = 255;
-
-          const index = (y * width + x) * 4;
-          if (index < data.length) {
-            data[index] = r;
-            data[index + 1] = g;
-            data[index + 2] = b;
-            data[index + 3] = a;
-          }
+          const index = (y * bw + x) * 4;
+          data[index] = 123 * intensity;
+          data[index + 1] = 116 * intensity;
+          data[index + 2] = 129 * intensity;
+          data[index + 3] = 255;
         }
       }
 
-      ctx.putImageData(imageData, 0, 0);
+      bctx.putImageData(imageData, 0, 0);
+
+      // Upscale the small buffer across the full canvas (GPU-side).
+      ctx.imageSmoothingEnabled = true;
+      ctx.drawImage(buffer, 0, 0, canvas.width, canvas.height);
 
       // Add subtle overlay for depth
+      const { width, height } = canvas;
       const overlayGradient = ctx.createRadialGradient(
         width / 2,
         height / 2,
@@ -113,15 +134,48 @@ export const Component = () => {
 
       ctx.fillStyle = overlayGradient;
       ctx.fillRect(0, 0, width, height);
-
-      time += 1;
-      animationRef.current = requestAnimationFrame(animate);
     };
 
-    animate();
+    // Users who ask for reduced motion get a single static frame.
+    const reducedMotion = window.matchMedia(
+      '(prefers-reduced-motion: reduce)'
+    ).matches;
+
+    if (reducedMotion) {
+      renderFrame();
+      return () => {
+        window.removeEventListener('resize', resizeCanvas);
+      };
+    }
+
+    // Only animate while the hero is actually on screen and the tab is
+    // visible — otherwise the loop keeps burning CPU behind other sections.
+    let onScreen = true;
+    let lastFrame = 0;
+
+    const animate = (now: number) => {
+      animationRef.current = requestAnimationFrame(animate);
+      if (!onScreen || document.hidden) return;
+      if (now - lastFrame < FRAME_MS) return;
+      lastFrame = now;
+
+      renderFrame();
+      time += 2; // keep the drift rate identical at half the frame rate
+    };
+
+    animationRef.current = requestAnimationFrame(animate);
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        onScreen = entry.isIntersecting;
+      },
+      { threshold: 0 }
+    );
+    observer.observe(canvas);
 
     return () => {
       window.removeEventListener('resize', resizeCanvas);
+      observer.disconnect();
       if (animationRef.current) {
         cancelAnimationFrame(animationRef.current);
       }
