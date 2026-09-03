@@ -22,26 +22,40 @@ export function CustomCursor() {
       return;
     }
 
+    // The position is a motion value, so it updates without re-rendering.
+    // The hover lookup is the expensive half — closest() walks the DOM — so it
+    // is throttled to one check per frame, and the two pieces of state are
+    // only written when they actually change. Previously every mousemove
+    // (120+/sec on a high-refresh mouse) did a tree walk and issued two state
+    // updates, re-rendering the cursor continuously while moving.
+    let queued = false;
+    let latestTarget: HTMLElement | null = null;
+
+    const readHoverState = () => {
+      queued = false;
+      const cursorElement = latestTarget?.closest("[data-cursor]");
+      const nextHovering = Boolean(cursorElement);
+      const nextText = cursorElement
+        ? cursorElement.getAttribute("data-cursor-text") || "View"
+        : "";
+
+      setIsHovering((prev) => (prev === nextHovering ? prev : nextHovering));
+      setCursorText((prev) => (prev === nextText ? prev : nextText));
+    };
+
     const handleMouseMove = (e: MouseEvent) => {
       // Offset by half the cursor size to center it
       mouseX.set(e.clientX - 10);
       mouseY.set(e.clientY - 10);
 
-      // Check if we are hovering over an element that wants the custom cursor
-      const target = e.target as HTMLElement;
-      const cursorElement = target.closest("[data-cursor]");
-
-      if (cursorElement) {
-        setIsHovering(true);
-        const text = cursorElement.getAttribute("data-cursor-text") || "View";
-        setCursorText(text);
-      } else {
-        setIsHovering(false);
-        setCursorText("");
+      latestTarget = e.target as HTMLElement;
+      if (!queued) {
+        queued = true;
+        requestAnimationFrame(readHoverState);
       }
     };
 
-    window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("mousemove", handleMouseMove, { passive: true });
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, [mouseX, mouseY]);
 
