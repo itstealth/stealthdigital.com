@@ -106,6 +106,12 @@ export default function RootLayout({
       )}
     >
       <head>
+        {/* The hero's Spline scene is fetched from these origins once the
+            runtime mounts; warming DNS/TLS here saves a round trip when it
+            does. GTM likewise. */}
+        <link rel="preconnect" href="https://prod.spline.design" crossOrigin="" />
+        <link rel="preconnect" href="https://www.googletagmanager.com" />
+
         {/* Google Tag Manager — as high in <head> as possible. Uses next/script
             so the App Router doesn't strip the inline tag; afterInteractive
             keeps it off the critical path without delaying the container
